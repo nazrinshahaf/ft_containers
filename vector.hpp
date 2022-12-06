@@ -51,7 +51,8 @@ namespace ft
 				_end(nullptr),
 				_capacity(nullptr)
 			{
-				cout << GREEN "Vector Empty Containter Constructor called" RESET << endl;
+				if (this->_print_msg)
+					cout << GREEN "Vector Empty Containter Constructor called" RESET << endl;
 			}
 
 			/*
@@ -74,7 +75,8 @@ namespace ft
 					const allocator_type &alloc = allocator_type()) : 
 				_alloc(alloc)
 			{
-				cout << GREEN "Vector Fill Constructor called" RESET << endl;
+				if (this->_print_msg)
+					cout << GREEN "Vector Fill Constructor called" RESET << endl;
 
 				if (n > this->_alloc.max_size())
 					throw std::length_error("ft::vector length_error");
@@ -141,7 +143,8 @@ namespace ft
 						InputIterator>::value_type* = nullptr) :
 				_alloc(alloc)
 			{
-				cout << GREEN "Vector Range Constructor called" RESET << endl;
+				if (this->_print_msg)
+					cout << GREEN "Vector Range Constructor called" RESET << endl;
 				//need a check to see wheather it is a valid iterator
 
 				//replace with ft::distance when implemented
@@ -170,7 +173,8 @@ namespace ft
 				_end(_start),
 				_capacity(_start + other.capacity())
 			{
-				cout << GREEN "Vector Copy Constructor called" RESET << endl;
+				if (this->_print_msg)
+					cout << GREEN "Vector Copy Constructor called" RESET << endl;
 				for (int i = 0; i < (int)other.size(); i++, this->_end++)
 					this->_alloc.construct(this->_end, other[i]);
 			}
@@ -187,7 +191,8 @@ namespace ft
 
 			~vector()
 			{
-				cout << RED "Vector Destructor called" RESET << endl;
+				if (this->_print_msg)
+					cout << RED "Vector Destructor called" RESET << endl;
 				for (pointer i = this->_start; i < this->_end; i++)
 					this->_alloc.destroy(i);
 				this->_alloc.deallocate(this->_start, this->_capacity - this->_start);
@@ -352,7 +357,7 @@ namespace ft
 				if (this->_end == this->_capacity)
 				{
 					size_type	new_capacity = 
-						(this->_capacity == 0) ? 1 : (this->_capacity - this->_start) * 2;
+						(this->capacity() == 0) ? 1 : (this->_capacity - this->_start) * 2;
 					this->reserve(new_capacity);
 				}
 				this->_alloc.construct(this->_end++, value);
@@ -987,10 +992,11 @@ namespace ft
 
 
 		private:
-			allocator_type	_alloc;
-			pointer			_start;
-			pointer			_end;
-			pointer			_capacity;
+			allocator_type		_alloc;
+			pointer				_start;
+			pointer				_end;
+			pointer				_capacity;
+			const static int	_print_msg = 1;
 
 	};
 

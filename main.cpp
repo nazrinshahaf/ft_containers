@@ -1,5 +1,7 @@
 #include "vector.hpp"
+#include "stack.hpp"
 #include <vector>
+#include <stack>
 #include <memory>
 #include <iostream>
 #include <iomanip>
@@ -284,11 +286,8 @@ void	test_actual(char *test)
 
 }
 
-int	main(int argc, char **argv)
+void	test_vector(void)
 {
-	(void)argc;
-	(void)argv;
-
 	//try {
 	//	ft::vector<int>		_int(atoi(argv[1]));
 	//	_int.reserve(atoi(argv[1]));
@@ -1237,4 +1236,54 @@ int	main(int argc, char **argv)
 	//}
 	
 	//test_actual(argv[1]);
+}
+
+void	test_stack()
+{
+	//{
+	//	ft::stack<int>	st;
+	//	ft::stack<int>	st2;
+	//
+	//	for (int i = 0; i < 5; i++)
+	//		st.push(i + 10);
+	//	cout << "size : " << st.size() << endl;
+	//	
+	//	int	init_size = st.size();
+	//	st2 = st;
+	//	for (int i = 0; i < init_size; i++)
+	//	{
+	//		cout << st2.top() << endl;
+	//		st2.pop();
+	//	}
+	//	cout << "size : " << st.size() << endl;
+	//	cout << std::boolalpha;
+	//	cout << "st == st2 : " << (st == st2) << endl;
+	//}
+	//{
+	//	std::stack<int>	st;
+	//	std::stack<int>	st2;
+	//
+	//	for (int i = 0; i < 5; i++)
+	//		st.push(i + 10);
+	//	cout << "size : " << st.size() << endl;
+	//	
+	//	int	init_size = st.size();
+	//	st2 = st;
+	//	for (int i = 0; i < init_size; i++)
+	//	{
+	//		cout << st2.top() << endl;
+	//		st2.pop();
+	//	}
+	//	cout << "size : " << st.size() << endl;
+	//	cout << std::boolalpha;
+	//	cout << "st == st2 : " << (st == st2) << endl;
+	//}
+}
+
+int	main(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	//test_vector();
+	//test_stack();
 }
