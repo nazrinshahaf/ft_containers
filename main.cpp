@@ -2,11 +2,15 @@
 #include "stack.hpp"
 #include <vector>
 #include <stack>
+#include <map>
 #include <memory>
 #include <iostream>
 #include <iomanip>
 #include <iterator>
+#include <time.h>
 #include "colours.h"
+
+#include "map_iterator.hpp"
 
 using std::cout;
 using std::endl;
@@ -1280,10 +1284,428 @@ void	test_stack()
 	//}
 }
 
+void	test_pair()
+{
+	//ft::pair<int, double>	p;
+
+	//int		i = 10;
+	//double	d = 12.0;
+
+	//ft::pair<int,double>	p2(i,d);
+
+	//ft::pair<int,double>	p3;
+
+	//p3 = p2;
+
+	//ft::pair<int, double>	p4;
+
+	//p4 = ft::make_pair(i, d);
+
+	//cout << p2.first << p2.second << endl;
+	//cout << p3.first << p3.second << endl;
+	//cout << p4.first << p4.second << endl;
+}
+
+//template <class T>
+//void	inorder_traversal(Node<T> *node)
+//{
+//	if (node != nullptr)
+//	{
+//		inorder_traversal(node->left);
+//		cout << node->data << endl;
+//		inorder_traversal(node->right);
+//	}
+//}
+//
+//template <class T>
+//void	postorder_traversal(Node<T> *node)
+//{
+//	if (node != nullptr)
+//	{
+//		postorder_traversal(node->left);
+//		postorder_traversal(node->right);
+//		cout << node->data << endl;
+//	}
+//}
+//
+//template <class T>
+//void	preorder_traversal(Node<T> *node)
+//{
+//	if (node != nullptr)
+//	{
+//		cout << node->data << endl;
+//		preorder_traversal(node->left);
+//		preorder_traversal(node->right);
+//	}
+//}
+
+//template <class T>
+//Node<T>	*search_tree(Node<T> *node, T to_find)
+//{
+//	if (node == nullptr || node->data == to_find)
+//		return node;
+//
+//	if (to_find < node->data)
+//		return search_tree(node->left, to_find);
+//	else
+//		return search_tree(node->right, to_find);
+//}
+
+//void	test_bt_node()
+//{
+//	RedBlackTree<int>	rbt;
+//
+//	Node<int>	*head = new Node<int>(10, rbt._sentinal);
+//	Node<int>	*l1 = new Node<int>(7, head, rbt._sentinal, rbt._sentinal);
+//	Node<int>	*r1 = new Node<int>(42, head, nullptr, nullptr, 1);
+//
+//	Node<int>	*r1l1 = new Node<int>(31, r1, nullptr, rbt._sentinal);
+//	Node<int>	*r2 = new Node<int>(64, r1);
+//
+//	Node<int>	*r1l2 = new Node<int>(29, r1l1, rbt._sentinal, rbt._sentinal, 1);
+//	Node<int>	*r2l1 = new Node<int>(50, r2, rbt._sentinal, rbt._sentinal, 1);
+//	Node<int>	*r3 = new Node<int>(83, r2, rbt._sentinal, rbt._sentinal, 1);
+//
+//	rbt._root = head;
+//
+//	head->left = l1;
+//	head->right = r1;
+//
+//	r1->left = r1l1;
+//	r1->right = r2;
+//
+//	r1l1->left = r1l2;
+//	r2->left = r2l1;
+//	r2->right = r3;
+//
+//	rbt._sentinal->left = l1;
+//	rbt._sentinal->right = r3;
+//
+//	//{
+//
+//	//	cout << head->data << endl;
+//	//	cout << head->left->data << endl;
+//	//	cout << head->right->data << endl;
+//	//	cout << head->right->left->data << endl;
+//	//	cout << head->right->left->left->data << endl;
+//	//	cout << head->right->right->data << endl;
+//	//	cout << head->right->right->left->data << endl;
+//	//	cout << head->right->right->right->data << endl;
+//	//	
+//
+//	//	cout << "inorder traversal" << endl;
+//	//	inorder_traversal(head);
+//	//	cout << endl;
+//
+//	//	cout << "postorder traversal" << endl;
+//	//	postorder_traversal(head);
+//	//	cout << endl;
+//
+//	//	cout << "preorder traversal" << endl;
+//	//	preorder_traversal(head);
+//	//	cout << endl;
+//
+//
+//	//	cout << search_tree(head, 64)->data << endl;
+//	//	cout << search_tree(head, 64)->right->data << endl;
+//	//	cout << search_tree(head, 64)->left->data << endl;
+//
+//	//}
+//
+//	{
+//		//rbt.inorder_traversal(rbt._root);
+//		//rbt.insert(5);
+//		//cout << endl;
+//		//rbt.inorder_traversal(rbt._root);
+//		//cout << endl;
+//
+//		//rbt.insert(89);
+//		//cout << endl;
+//		//rbt.inorder_traversal(rbt._root);
+//		//cout << endl;
+//
+//		//rbt.insert(32);
+//		//cout << endl;
+//		//rbt.inorder_traversal(rbt._root);
+//		//cout << endl;
+//	}
+//
+//	delete head;
+//	delete l1;
+//	delete r1;
+//	delete r1l1;
+//	delete r2;
+//	delete r1l2;
+//	delete r2l1;
+//	delete r3;
+//
+//	//{
+//	//	 RedBlackTree<int>	rbt;
+//
+//	//	 rbt.insert(10);
+//	//}
+//}
+
+# define RBT_BLACK false
+# define RBT_RED true
+
+void	test_rbt(void)
+{
+	//cout << MAGENTA "case 1" RESET << endl;
+	//cout << RED "parent and uncle of z are red" RESET << endl;
+	//{
+
+	//	RedBlackTree<int>	rbt;
+
+	//	rbt.insert(10);
+
+	//	rbt.insert(21);
+	//	rbt.insert(18);
+	//	rbt.insert(15);
+	//	rbt.insert(12);
+	//	rbt.insert(19);
+
+	//	rbt.insert(25);
+	//	rbt.insert(22);
+	//	rbt.insert(30);
+	//	rbt.insert(27);
+	//	rbt.insert(34);
+
+	//	rbt._root->right->colour = RBT_BLACK; //21
+
+	//	rbt._root->right->left->colour = RBT_RED; //18
+	//	rbt._root->right->right->colour = RBT_RED; //25
+
+	//	rbt._root->right->left->left->colour = RBT_BLACK; //15
+	//	rbt._root->right->left->right->colour = RBT_BLACK; //19
+	//	rbt._root->right->right->left->colour = RBT_BLACK; //22
+	//	rbt._root->right->right->right->colour = RBT_BLACK; //30
+
+	//	rbt._root->right->left->left->left->colour = RBT_RED; //12
+	//	rbt._root->right->right->right->left->colour = RBT_RED; //27
+	//	rbt._root->right->right->right->right->colour = RBT_RED; //34
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "inserting 29.." << endl;
+	//	cout << endl;
+
+	//	rbt.insert(29);
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	rbt.rebalance_tree(rbt._root->right->right->right->left->right);
+	//	cout << endl;
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//}
+
+	//cout << "Testing case 3" << endl;
+	//{
+	//	RedBlackTree<int>	rbt;
+
+	//	rbt.insert(10);
+
+	//	rbt.insert(21);
+	//	rbt.insert(18);
+	//	rbt.insert(15);
+	//	rbt.insert(12);
+	//	rbt.insert(19);
+
+	//	rbt.insert(25);
+	//	rbt.insert(22);
+	//	rbt.insert(30);
+	//	rbt.insert(27);
+	//	rbt.insert(34);
+
+	//	rbt._root->right->colour = RBT_BLACK; //21
+
+	//	rbt._root->right->left->colour = RBT_RED; //18
+	//	rbt._root->right->right->colour = RBT_RED; //25
+
+	//	rbt._root->right->left->left->colour = RBT_BLACK; //15
+	//	rbt._root->right->left->right->colour = RBT_BLACK; //19
+	//	rbt._root->right->right->left->colour = RBT_BLACK; //22
+	//	rbt._root->right->right->right->colour = RBT_BLACK; //30
+
+	//	rbt._root->right->left->left->left->colour = RBT_RED; //12
+	//	rbt._root->right->right->right->left->colour = RBT_RED; //27
+	//	rbt._root->right->right->right->right->colour = RBT_RED; //34
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "inserting 11.." << endl;
+	//	cout << endl;
+
+	//	rbt.insert(11);
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	rbt.rebalance_tree_case_c(rbt._root->right->left->left->left->left);
+	//	cout << endl;
+
+	//	rbt.print_helper(rbt._root, "", true);
+	//}
+	
+	//{
+	//	RedBlackTree<int>	rbt;
+
+	//	cout << "inserting 2.." << endl;
+	//	rbt.insert(2);
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	cout << "inserting 1.." << endl;
+	//	rbt.insert(1);
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	cout << "inserting 3.." << endl;
+	//	rbt.insert(3);
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	cout << "inserting 4.." << endl;
+	//	rbt.insert(4);
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	cout << "inserting 21.." << endl;
+	//	rbt.insert(21);
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+	//}
+	
+	//{
+	//	RedBlackTree<int>	rbt;
+	//	int					num_count = 20;
+	//	std::vector<int>	ins;
+	//	std::vector<int>	del;
+
+	//	srand(time(0));
+	//	for (int i = 0; i < num_count; i++)
+	//	{
+	//		int	num = (rand() % num_count) + 1;
+	//		cout << "inserting " << num << "..." << endl;
+	//		ins.push_back(num);
+	//		rbt.insert(num);
+	//		cout << "==============" << endl;
+	//		rbt.print_helper(rbt._root, "", true);
+	//		cout << "==============" << endl;
+	//		cout << endl;
+	//	}
+
+	//	//cout << "FIRST DELETE" << endl;
+	//	//For (int i = 0; i < num_count; i++)
+	//	//{
+	//	//	int	num = (rand() % num_count) + 1;
+	//	//	cout << "deleting " << num << "..." << endl;
+	//	//	del.push_back(num);
+	//	//	cout << "==============" << endl;
+	//	//	cout << RESET "TREE BEFORE DELETION" RESET << endl;
+	//	//	rbt.print_helper(rbt._root, "", true);
+	//	//	cout << "==============" << endl;
+	//	//	rbt.delete_node(num);
+	//	//	cout << endl;
+	//	//}
+
+	//	cout << "END TREE" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+
+	//	cout << "ins nums used" << endl;
+	//	for (std::vector<int>::iterator i = ins.begin(); i < ins.end(); i++)
+	//		cout << *i << ",";
+	//	cout << endl;
+
+	//	cout << "del nums used" << endl;
+	//	for (std::vector<int>::iterator i = del.begin(); i < del.end(); i++)
+	//		cout << *i << ",";
+	//	cout << endl;
+	//}
+
+	//{
+	//	RedBlackTree<int>	rbt;
+	//	//int arr[11] = {19,19,12,19,14,10,4,12,1,15,15};
+	//	//int arr[12] = {1,2,3,4,5,6,7,8,0,1,2,3};
+	//	//int arr[14] = {6,11,1,7,2,11,3,4,4,6,5,6,3,1};
+	//	//int	arr[20] = {16,19,16,16,12,4,12,17,20,13,17,18,19,10,20,8,17,5,2,9};
+	//	//int	del[20] = {7,19,10,20,11,2,8,16,9,4,11,16,9,2,2,4,10,8,5,19};
+	//	//int arr[6] = {4,2,6,5,7,3};
+	//	int arr[8] = {1,2,3,4,5,6,7,8};
+	//	//int arr[20] = {6,16,1,11,9,2,10,13,13,20,19,12,18,20,4,14,1,1,18,20};
+	//	//int del[20] = {1,4,9,10,12,16,16,11,18,7,11,12,11,14,11,15,19,17,8,4};
+
+	//	for (int i = 0; i < 8; i++)
+	//	{
+	//		//arr[i] *= 10;
+	//		//cout << "inserting " << arr[i] << "..." << endl;
+	//		rbt.insert(arr[i]);
+	//		//cout << "==============" << endl;
+	//		//rbt.print_helper(rbt._root, "", true);
+	//		//cout << "==============" << endl;
+	//		//cout << endl << endl;
+	//	}
+	//	//rbt._root->left->right->colour = RBT_BLACK;
+	//	//rbt._root->right->right->colour = RBT_BLACK;
+	//	//rbt._root->right->left->colour = RBT_BLACK;
+	//	//rbt.print_helper(rbt._root, "", true);
+
+	//	//cout << "deleting 2..." << endl;
+	//	//rbt.delete_node(3);
+	//	//cout << "END TREE" << endl;
+	//	//rbt.print_helper(rbt._root, "", true);
+
+	//	//cout << "==============" << endl;	
+	//	//rbt.print_helper(rbt._root, "", true);
+	//	//cout << "==============" << endl;	
+	//	//cout << "sentinal colour : " << (rbt._sentinal->colour == RBT_BLACK ?
+	//	//		(RED "BLACK" RESET) : (GREEN "RED" RESET)) << endl;
+	//	//cout << endl;
+	//	////cout << "min : " << rbt.minimum_in_subtree(rbt._root)->data << endl;
+	//	////cout << "max : " << rbt.maximum_in_subtree(rbt._root->left->left->right)->data << endl;
+	//
+	//	//cout << "addr " << rbt._root->left->left->left << endl;
+	//	//cout << "l " << rbt._root->left->left->left->left->data << endl;
+	//	//cout << "r " << rbt._root->left->left->left->right->data << endl;
+	//	//cout << "DELETE FIRST" << endl;
+	//	//for (int i = 0; i < 20; i++)
+	//	//{
+	//	//	cout << "deleting " << del[i] << "..." << endl;
+	//	//	cout << "==============" << endl;
+	//	//	cout << "BEFORE DELETE" << endl;
+	//	//	rbt.print_helper(rbt._root, "", true);
+	//	//	cout << "==============" << endl;
+	//	//	rbt.delete_node(del[i]);
+	//	//	cout << "==============" << endl;
+	//	//	cout << "AFTER DELETE" << endl;
+	//	//	rbt.print_helper(rbt._root, "", true);
+	//	//	cout << "==============" << endl;
+	//	//	//cout << endl << endl;
+	//	//}
+	//	//rbt.postorder_traversal(rbt._root);
+	//	//cout << "HERE" << endl;
+	//	//cout << rbt._root->data << endl;
+	//	//cout << rbt._root->right->data << endl;
+	//	//cout << rbt._root->right->left->data << endl;
+	//	//cout << rbt._root->right->left->left->data << endl;
+	//	//cout << rbt._root->right->left->right->data << endl;
+
+	//	cout << "==============" << endl;	
+	//	cout << "FINAL" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "==============" << endl;	
+	//}
+	
+	//system("leaks containers");
+}
+
 int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
 	//test_vector();
 	//test_stack();
+	//test_pair();
+	//test_bt_node();
+	test_rbt();
 }

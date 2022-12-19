@@ -1099,7 +1099,7 @@ namespace ft
 		void		insert(iterator position, InputIterator first, 
 			InputIterator last);
 
-		iterator erase(iterator position);
+		iterator	erase(iterator position);
 		void		swap(vector &other);
 		void		clear(void);
 

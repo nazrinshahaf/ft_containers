@@ -5,7 +5,7 @@ C98 = -std=c++98
 SANITIZE = -fsanitize=address
 RM = rm -f
 
-SRC = vector.cpp\
+SRC =
 
 MAIN = main.cpp
 

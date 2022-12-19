@@ -1,0 +1,132 @@
+===================================================================================
+										INSERTION	
+===================================================================================
+insert
+
+
+===================================================================================
+insert_fixup
+
+
+case 1
+if (z.parent and z.uncle are red)
+	-> colour z.parent black
+	-> colour z.uncle black
+	-> colour z.gp red
+	-> repeat on z.gp
+
+case 2
+if (z.parent is red and z.uncle is black)
+if (z is right child and z.parent is left child)
+(z and parent have to be opposite child if not refer to case 2)
+
+if (z is right child and z.parent is left child)
+	-> z = z.parent
+	-> left rotate on z (old z.parent)
+	-> case 3(z)
+		(new z is still left child and z.parent is left child after left rotation)
+		-> right rotate on z.gp
+		-> colour z.parent black
+		-> colour z.sibling red
+if (z is left child and z.parent is right child)
+	-> right rotate on z.parent
+	-> case 3(z.parent)
+		(new z is still right child and z.parent is right child after right rotation)
+		-> left rotate on z.gp
+		-> colour z.parent black
+		-> colour z.sibling red
+
+case 3
+if z.parent is red and z.uncle is black
+if z and z.parent are both left/right child
+(both z and parent have to be left left or right right)
+
+if (z and z.parent are both left child)
+	-> right rotate on z.gp
+	-> colour z.parent black
+	-> colour z.sibling red
+if (z and z.parent are both right child)
+	-> left rotate on z.gp
+	-> colour z.parent black
+	-> colour z.sibling red
+
+case 2 always applies case 3
+===================================================================================
+										DELETION
+===================================================================================
+delete
+
+
+case 1
+if (z.left is NILL)
+	-> x = z.right
+	-> transplant(z,x)
+	-> delete_fixup(x);
+
+case 2
+if (z.right is NILL)
+	-> x = z.left
+	-> transplant(z,x)
+	-> delete_fixup(x);
+
+case 3
+if (z has 2 children)
+	-> y = minimum in z right child subtree (inorder traversal)
+	-> x = y.right
+	if (y.parent is z)
+		-> x.parent = y //if sentinal check
+	else (y.parent is not z)
+		-> transplant(y, x)
+		-> x = z.right
+		-> x.parent = y
+		-> y.right = x;
+	-> transplant(z, y)
+	-> y.left = z.left;
+	-> y.left.parent = y;
+	-> y.colour = z.colour
+	-> delete_fixup(x)
+
+===================================================================================
+delete_fixup
+
+delete_fixup may not be complete and may call other fixups.
+So after a fixup the RBT may still be broken
+
+w = x.sibling
+
+case 1
+if (w is red)
+	-> colour w to black
+	-> colour x.parent colour to red
+	if (x is left child)
+		-> left_rotate(x.parent)
+	else if (x is right child)
+		-> right_rotate(x.parent)
+	-> w = x.parent.right
+
+case 2
+if (w and w.left and w.right is black)
+	-> colour w to red
+	-> x = x.parent
+
+case 3
+if (w is black, w.left is red and w.right is black)
+	if (x is left child)
+		-> colour w.left to black
+		-> colour w to red
+		-> right_rotate(w)
+		-> w = x.parent.right
+		-> case 4
+	else if (x is right child)
+		-> mirror ^
+
+case 4
+if (w is black and w.right is red)
+		-> colour w to x.parent.colour
+		-> colour x.parent to black
+		-> colour w.right to black
+	if (x is left child)
+		-> left_rotate(x.parent)
+	else if (x is right child)
+		-> right_rotate(x.parent)
+		-> set x to root

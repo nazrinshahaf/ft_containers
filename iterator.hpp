@@ -43,6 +43,7 @@ namespace ft
 
 	struct	vector_iterator_tag {};
 
+	struct	map_iterator_tag {};
 
 	/*
 	 * Iterator_traits is the type trait class that provides uniform interface.
@@ -188,7 +189,6 @@ namespace ft
 			typedef	typename ft::iterator_traits<Iter>::difference_type		difference_type;
 			typedef	typename ft::iterator_traits<Iter>::pointer				pointer;
 			typedef	typename ft::iterator_traits<Iter>::reference			reference;
-	
 	
 			/*
 			 * (1) Default Constructor.
@@ -475,6 +475,109 @@ namespace ft
 				return (false);
 		}
 		return (first1 == last1) && (first2 != last2);
+	}
+
+	/*
+	 * Pair
+	 * */
+
+	template <class T1, class T2>
+	struct	pair
+	{
+		typedef	T1			first_type;
+		typedef	T2			second_type;
+
+		/*
+		 * default constructor.
+		 * */
+
+		pair() : 
+			first(),
+			second()
+		{ }
+
+		/*
+		 * copy constructor.
+		 * */
+
+		template <class U, class V>
+		pair(const pair<U,V> &pr)
+		{
+			this->first = pr.first;
+			this->second = pr.second;
+		}
+
+		/*
+		 * initialization constructor.
+		 * */
+
+		pair(const first_type &a, const second_type &b) :
+			first(a),
+			second(b)
+		{ }
+
+		/*
+		 * copy assignment operator.
+		 * */
+
+		pair	&operator=(const pair &pr)
+		{
+			this->first = pr.first;
+			this->second = pr.second;
+			return (*this);
+		}
+
+		/*
+		 * make_pair.
+		 * */
+
+		friend pair<T1,T2> make_pair(T1 x, T2 y);
+
+		T1		first;
+		T2		second;
+	};
+
+	template <class T1, class T2>
+	pair<T1,T2> make_pair(T1 x, T2 y)
+	{
+		return (pair<T1,T2>(x,y));
+	}
+
+	template <class T1, class T2>
+	bool	operator==(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return ((lhs.first == rhs.first) && (lhs.second == rhs.second));
+	}
+
+	template <class T1, class T2>
+	bool	operator!=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	template <class T1, class T2>
+	bool	operator<(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return (lhs.first < rhs.first ||
+			(!(rhs.first < lhs.first) && lhs.second < rhs.second));
+	}
+
+	template <class T1, class T2>
+	bool	operator<=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return (!(rhs < lhs));
+	}
+
+	template <class T1, class T2>
+	bool	operator>(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return (rhs < lhs);
+	}
+
+	template <class T1, class T2>
+	bool	operator>=(const pair<T1,T2> &lhs, const pair<T1,T2> &rhs)
+	{
+		return (!(lhs < rhs));
 	}
 }
 
