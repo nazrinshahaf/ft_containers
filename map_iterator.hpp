@@ -57,6 +57,7 @@ class	RedBlackTree
 
 		/*
 		 * default constructor.
+		 * default destructor.
 		 * */
 
 		RedBlackTree()
@@ -76,16 +77,6 @@ class	RedBlackTree
 			delete _sentinal;
 		}
 
-		void delete_tree(node_ptr node)
-		{
-			if (node != _sentinal)
-			{
-				delete_tree(node->left);
-				delete_tree(node->right);
-				delete node;
-			}
-		}
-
 		/*
 		 * insert.
 		 *
@@ -100,7 +91,7 @@ class	RedBlackTree
 		 * @param 'val' : the value to be inserted into the binary tree.
 		 * */
 
-		void	insert(value_type val)
+		void	insert_node(value_type val)
 		{
 			//if tree has no elements
 			if (_root == _sentinal)
@@ -264,10 +255,58 @@ class	RedBlackTree
 		}
 
 		/*
-		 * CHANGE TO PRIVATE WHEN DONE
+		 * print_helper.
 		 * */
 
-	public:
+		void	print_helper(node_ptr n, std::string indent, bool last)
+		{
+			if (n != _sentinal)
+			{
+				cout << indent;
+				if (last)
+				{
+					cout << "R----";
+					indent += "     ";
+				}
+				else
+				{
+					cout << "L----";
+					indent += "|    ";
+				}
+				cout << n->data << (n->colour == RBT_BLACK ? RED : GREEN)
+					<< "(" << (n->colour == RBT_BLACK ? "B" : "R")
+					<< ")" RESET << endl;
+				print_helper(n->left, indent, false);
+				print_helper(n->right, indent, true);
+			}
+		}
+
+		/*
+		 * get_root.
+		 *
+		 * Returns root of tree.
+		 * */
+
+		node_ptr	get_root(void)
+		{
+			return (this->_root);
+		}
+
+	private:
+
+		/*
+		 * Helper function for rbt destructor.
+		 * */
+
+		void delete_tree(node_ptr node)
+		{
+			if (node != _sentinal)
+			{
+				delete_tree(node->left);
+				delete_tree(node->right);
+				delete node;
+			}
+		}
 
 		void	inorder_traversal(node_ptr node)
 		{
@@ -695,33 +734,6 @@ class	RedBlackTree
 			//cout << "EXIT LOOP" << endl;
 			//print_helper(_root, "", true);
 			//cout << endl << endl << endl;
-		}
-
-		/*
-		 * print_helper.
-		 * */
-
-		void	print_helper(node_ptr n, std::string indent, bool last)
-		{
-			if (n != _sentinal)
-			{
-				cout << indent;
-				if (last)
-				{
-					cout << "R----";
-					indent += "     ";
-				}
-				else
-				{
-					cout << "L----";
-					indent += "|    ";
-				}
-				cout << n->data << (n->colour == RBT_BLACK ? RED : GREEN)
-					<< "(" << (n->colour == RBT_BLACK ? "B" : "R")
-					<< ")" RESET << endl;
-				print_helper(n->left, indent, false);
-				print_helper(n->right, indent, true);
-			}
 		}
 
 		node_ptr	_sentinal;

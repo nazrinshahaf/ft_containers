@@ -1414,17 +1414,17 @@ void	test_pair()
 //
 //	{
 //		//rbt.inorder_traversal(rbt._root);
-//		//rbt.insert(5);
+//		//rbt.insert_node(5);
 //		//cout << endl;
 //		//rbt.inorder_traversal(rbt._root);
 //		//cout << endl;
 //
-//		//rbt.insert(89);
+//		//rbt.insert_node(89);
 //		//cout << endl;
 //		//rbt.inorder_traversal(rbt._root);
 //		//cout << endl;
 //
-//		//rbt.insert(32);
+//		//rbt.insert_node(32);
 //		//cout << endl;
 //		//rbt.inorder_traversal(rbt._root);
 //		//cout << endl;
@@ -1442,7 +1442,7 @@ void	test_pair()
 //	//{
 //	//	 RedBlackTree<int>	rbt;
 //
-//	//	 rbt.insert(10);
+//	//	 rbt.insert_node(10);
 //	//}
 //}
 
@@ -1457,19 +1457,19 @@ void	test_rbt(void)
 
 	//	RedBlackTree<int>	rbt;
 
-	//	rbt.insert(10);
+	//	rbt.insert_node(10);
 
-	//	rbt.insert(21);
-	//	rbt.insert(18);
-	//	rbt.insert(15);
-	//	rbt.insert(12);
-	//	rbt.insert(19);
+	//	rbt.insert_node(21);
+	//	rbt.insert_node(18);
+	//	rbt.insert_node(15);
+	//	rbt.insert_node(12);
+	//	rbt.insert_node(19);
 
-	//	rbt.insert(25);
-	//	rbt.insert(22);
-	//	rbt.insert(30);
-	//	rbt.insert(27);
-	//	rbt.insert(34);
+	//	rbt.insert_node(25);
+	//	rbt.insert_node(22);
+	//	rbt.insert_node(30);
+	//	rbt.insert_node(27);
+	//	rbt.insert_node(34);
 
 	//	rbt._root->right->colour = RBT_BLACK; //21
 
@@ -1489,7 +1489,7 @@ void	test_rbt(void)
 	//	cout << "inserting 29.." << endl;
 	//	cout << endl;
 
-	//	rbt.insert(29);
+	//	rbt.insert_node(29);
 
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
@@ -1504,19 +1504,19 @@ void	test_rbt(void)
 	//{
 	//	RedBlackTree<int>	rbt;
 
-	//	rbt.insert(10);
+	//	rbt.insert_node(10);
 
-	//	rbt.insert(21);
-	//	rbt.insert(18);
-	//	rbt.insert(15);
-	//	rbt.insert(12);
-	//	rbt.insert(19);
+	//	rbt.insert_node(21);
+	//	rbt.insert_node(18);
+	//	rbt.insert_node(15);
+	//	rbt.insert_node(12);
+	//	rbt.insert_node(19);
 
-	//	rbt.insert(25);
-	//	rbt.insert(22);
-	//	rbt.insert(30);
-	//	rbt.insert(27);
-	//	rbt.insert(34);
+	//	rbt.insert_node(25);
+	//	rbt.insert_node(22);
+	//	rbt.insert_node(30);
+	//	rbt.insert_node(27);
+	//	rbt.insert_node(34);
 
 	//	rbt._root->right->colour = RBT_BLACK; //21
 
@@ -1536,7 +1536,7 @@ void	test_rbt(void)
 	//	cout << "inserting 11.." << endl;
 	//	cout << endl;
 
-	//	rbt.insert(11);
+	//	rbt.insert_node(11);
 
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
@@ -1551,27 +1551,27 @@ void	test_rbt(void)
 	//	RedBlackTree<int>	rbt;
 
 	//	cout << "inserting 2.." << endl;
-	//	rbt.insert(2);
+	//	rbt.insert_node(2);
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
 
 	//	cout << "inserting 1.." << endl;
-	//	rbt.insert(1);
+	//	rbt.insert_node(1);
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
 
 	//	cout << "inserting 3.." << endl;
-	//	rbt.insert(3);
+	//	rbt.insert_node(3);
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
 
 	//	cout << "inserting 4.." << endl;
-	//	rbt.insert(4);
+	//	rbt.insert_node(4);
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
 
 	//	cout << "inserting 21.." << endl;
-	//	rbt.insert(21);
+	//	rbt.insert_node(21);
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << endl;
 	//}
@@ -1588,7 +1588,7 @@ void	test_rbt(void)
 	//		int	num = (rand() % num_count) + 1;
 	//		cout << "inserting " << num << "..." << endl;
 	//		ins.push_back(num);
-	//		rbt.insert(num);
+	//		rbt.insert_node(num);
 	//		cout << "==============" << endl;
 	//		rbt.print_helper(rbt._root, "", true);
 	//		cout << "==============" << endl;
@@ -1639,7 +1639,7 @@ void	test_rbt(void)
 	//	{
 	//		//arr[i] *= 10;
 	//		//cout << "inserting " << arr[i] << "..." << endl;
-	//		rbt.insert(arr[i]);
+	//		rbt.insert_node(arr[i]);
 	//		//cout << "==============" << endl;
 	//		//rbt.print_helper(rbt._root, "", true);
 	//		//cout << "==============" << endl;
@@ -1695,6 +1695,14 @@ void	test_rbt(void)
 	//	rbt.print_helper(rbt._root, "", true);
 	//	cout << "==============" << endl;	
 	//}
+	
+	RedBlackTree<int>	rbt;
+
+	rbt.insert_node(1);
+	rbt.insert_node(1);
+	rbt.insert_node(1);
+
+	rbt.print_helper(rbt.get_root(), "", true);
 	
 	//system("leaks containers");
 }
