@@ -32,16 +32,16 @@ namespace ft
 			typedef ft::vector_iterator<T>										iterator;
 			typedef ft::vector_iterator<const T>								const_iterator;
 			typedef	ft::reverse_iterator<iterator>								reverse_iterator;
-			typedef	ft::reverse_iterator<const iterator>						const_reverse_iterator;
+			typedef	ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 			typedef	typename iterator_traits<iterator>::difference_type			difference_type;
 			typedef typename Alloc::size_type									size_type;
 
 			/*
 			 * defualt constructor.
-			 * Consturcts an empty container with no elements.
+			 * Constructs an empty container with no elements.
 			 *
 			 * @param 'alloc' : allocater to be used to allocate memory for vector.
-			 * 	If no allocated is passed in allloc default value defaulted to 
+			 * 	If no allocater is passed in allloc default value defaulted to 
 			 * 	std::allocator constructor.
 			 * */
 
@@ -140,7 +140,7 @@ namespace ft
 			vector(InputIterator first, InputIterator last,
 					const allocator_type &alloc = allocator_type(),
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value, 
-						InputIterator>::value_type* = nullptr) :
+						InputIterator>::type* = nullptr) :
 				_alloc(alloc)
 			{
 				if (this->_print_msg)
@@ -222,7 +222,7 @@ namespace ft
 
 			iterator				begin(void)
 			{
-				return (this->_start);
+				return iterator(this->_start);
 			}
 
 			/*
@@ -231,7 +231,7 @@ namespace ft
 
 			const_iterator			begin(void) const
 			{
-				return (this->_start);
+				return (const_iterator(this->_start));
 			}
 
 			/*
@@ -249,7 +249,8 @@ namespace ft
 
 			const_reverse_iterator	rbegin(void) const
 			{
-				return (reverse_iterator(this->end()));
+				return (const_reverse_iterator(this->end()));
+				//return (ft::reverse_iterator<ft::vector_iterator<const T> >(this->end()));
 			}
 
 			/*
@@ -258,7 +259,7 @@ namespace ft
 
 			iterator				end(void)
 			{
-				return (this->_end);
+				return iterator(this->_end);
 			}
 
 			/*
@@ -267,7 +268,7 @@ namespace ft
 
 			const_iterator			end(void) const
 			{
-				return (this->_end);
+				return const_iterator(this->_end);
 			}
 
 			/*
@@ -285,7 +286,7 @@ namespace ft
 
 			const_reverse_iterator	rend(void) const
 			{
-				return (reverse_iterator(this->begin()));
+				return (const_reverse_iterator(this->begin()));
 			}
 
 			/* Modifiers */
@@ -329,7 +330,7 @@ namespace ft
 			template <class InputIterator>
 			void	assign(InputIterator first, InputIterator last,
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value,
-					InputIterator>::value_type* = nullptr)
+					InputIterator>::type* = nullptr)
 			{
 				//replace with ft::distance after properly implemented
 				//size_type	len = 0;
@@ -544,7 +545,7 @@ namespace ft
 			template<class InputIterator>
 			void	insert(iterator position, InputIterator first, InputIterator last,
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value, 
-						InputIterator>::value_type* = nullptr)
+						InputIterator>::type* = nullptr)
 			{
 				if (ft::distance(first, last) <= 0)
 					return ;

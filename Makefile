@@ -29,6 +29,10 @@ leaks: re
 test: re
 	$(re) ./$(NAME)
 
+print: re
+	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D PRINT_MSG
+	./$(NAME)
+
 san: fclean
 	$(fclean)
 	$(CC) $(CFLAGS) $(C98) $(SANITIZE) $(MAIN) $(SRC) -o $(NAME)

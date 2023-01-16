@@ -1,5 +1,3 @@
-#include "vector.hpp"
-#include "stack.hpp"
 #include <vector>
 #include <stack>
 #include <map>
@@ -10,10 +8,15 @@
 #include <time.h>
 #include "colours.h"
 
+#include "vector.hpp"
+#include "stack.hpp"
+#include "map.hpp"
 #include "map_iterator.hpp"
+#include "red_black_tree.hpp"
 
 using std::cout;
 using std::endl;
+using std::string;
 
 class	myint
 {
@@ -1578,11 +1581,12 @@ void	test_rbt(void)
 	
 	//{
 	//	RedBlackTree<int>	rbt;
-	//	int					num_count = 20;
+	//	int					num_count = 50;
 	//	std::vector<int>	ins;
 	//	std::vector<int>	del;
 
 	//	srand(time(0));
+	//	cout << "size : " << rbt.size() << endl;
 	//	for (int i = 0; i < num_count; i++)
 	//	{
 	//		int	num = (rand() % num_count) + 1;
@@ -1590,26 +1594,31 @@ void	test_rbt(void)
 	//		ins.push_back(num);
 	//		rbt.insert_node(num);
 	//		cout << "==============" << endl;
+	//		cout << "size : " << rbt.size() << endl;
 	//		rbt.print_helper(rbt._root, "", true);
 	//		cout << "==============" << endl;
 	//		cout << endl;
 	//	}
 
 	//	//cout << "FIRST DELETE" << endl;
-	//	//For (int i = 0; i < num_count; i++)
-	//	//{
-	//	//	int	num = (rand() % num_count) + 1;
-	//	//	cout << "deleting " << num << "..." << endl;
-	//	//	del.push_back(num);
-	//	//	cout << "==============" << endl;
-	//	//	cout << RESET "TREE BEFORE DELETION" RESET << endl;
-	//	//	rbt.print_helper(rbt._root, "", true);
-	//	//	cout << "==============" << endl;
-	//	//	rbt.delete_node(num);
-	//	//	cout << endl;
-	//	//}
+	//	for (int i = 0; i < num_count; i++)
+	//	{
+	//		int	num = (rand() % num_count) + 1;
+	//		cout << "deleting " << num << "..." << endl;
+	//		del.push_back(num);
+	//		cout << "==============" << endl;
+	//		cout << RESET "TREE BEFORE DELETION" RESET << endl;
+	//		rbt.print_helper(rbt._root, "", true);
+	//		cout << "==============" << endl;
+	//		rbt.delete_node(num);
+	//		cout << "size : " << rbt.size() << endl;
+	//		cout << endl;
+	//	}
 
 	//	cout << "END TREE" << endl;
+	//	cout << "size : " << rbt.size() << endl;
+	//	cout << "min : " << *rbt.min(rbt.get_root())->data << endl;
+	//	cout << "max : " << *rbt.max(rbt.get_root())->data << endl;
 	//	rbt.print_helper(rbt._root, "", true);
 
 	//	cout << "ins nums used" << endl;
@@ -1696,15 +1705,694 @@ void	test_rbt(void)
 	//	cout << "==============" << endl;	
 	//}
 	
-	RedBlackTree<int>	rbt;
+	//{
+	//	RedBlackTree<int>	rbt;
+	//	int					num_count = 20;
 
-	rbt.insert_node(1);
-	rbt.insert_node(1);
-	rbt.insert_node(1);
+	//	std::vector<int>	ins;
+	//	std::vector<int>	del;
 
-	rbt.print_helper(rbt.get_root(), "", true);
+	//	srand(time(0));
+	//	cout << "size : " << rbt.size() << endl;
+	//	for (int i = 0; i < num_count; i++)
+	//	{
+	//		int	num = (rand() % num_count) + 1;
+	//		ins.push_back(num);
+	//		rbt.insert_node(num);
+	//	}
+
+	//	RedBlackTree<int>	rbt2(rbt);
+
+	//	cout << endl;
+	//	cout << "rbt ori" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << endl;
+
+	//	cout << endl;
+	//	cout << "rbt copy" << endl;
+	//	rbt2.print_helper(rbt2._root, "", true);
+	//	cout << endl;
+	//	//cout << "size : " << rbt.size() << endl;
+	//	//cout << "min : " << *rbt.min(rbt.get_root())->data << endl;
+	//	//cout << "max : " << *rbt.max(rbt.get_root())->data << endl;
+	//
+	//	for (int i = 0; i < num_count; i++)
+	//	{
+	//		int	num = (rand() % num_count) + 1;
+	//		cout << "deleting " << num << "..." << endl;
+	//		del.push_back(num);
+	//		rbt.delete_node(num);
+	//		rbt2.delete_node(num);
+	//		rbt.print_helper(rbt._root, "", true);
+	//		rbt2.print_helper(rbt2._root, "", true);
+	//		cout << "size : " << rbt.size() << endl;
+	//		cout << endl;
+	//	}
+
+	//	cout << endl;
+	//	cout << "END rbt ori" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "size : " << rbt.size() << endl;
+	//	cout << endl;
+
+	//	cout << endl;
+	//	cout << "END rbt copy" << endl;
+	//	rbt2.print_helper(rbt2._root, "", true);
+	//	cout << "size : " << rbt2.size() << endl;
+	//	cout << endl;
+
+	//	cout << "ins nums used" << endl;
+	//	for (std::vector<int>::iterator i = ins.begin(); i < ins.end(); i++)
+	//		cout << *i << ",";
+	//	cout << endl;
+
+	//	cout << "del nums used" << endl;
+	//	for (std::vector<int>::iterator i = del.begin(); i < del.end(); i++)
+	//	   cout << *i << ",";
+	//	cout << endl;
+
+	//	cout << "Deleting only rbt copy" << endl;
+	//	for (int i = 0; i < num_count; i++)
+	//	{
+	//		int	num = (rand() % num_count) + 1;
+	//		cout << "deleting..." << num << "..." << endl;
+	//		del.push_back(num);
+	//		rbt2.delete_node(num);
+	//		rbt2.print_helper(rbt2._root, "", true);
+	//		cout << "size : " << rbt.size() << endl;
+	//		cout << endl;
+	//	}
+
+	//	cout << endl;
+	//	cout << "END rbt ori" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "size : " << rbt.size() << endl;
+	//	cout << endl;
+
+	//	cout << endl;
+	//	cout << "END rbt copy" << endl;
+	//	rbt2.print_helper(rbt2._root, "", true);
+	//	cout << "size : " << rbt2.size() << endl;
+	//	cout << endl;
+
+	//	cout << "del nums used" << endl;
+	//	for (std::vector<int>::iterator i = del.begin(); i < del.end(); i++)
+	//	   cout << *i << ",";
+	//	cout << endl;
+
+	//	rbt2 = rbt;
+
+	//	cout << endl;
+	//	cout << "AFTER copy assignment rbt ori" << endl;
+	//	rbt.print_helper(rbt._root, "", true);
+	//	cout << "size : " << rbt.size() << endl;
+	//	cout << endl;
+
+	//	cout << endl;
+	//	cout << "AFTER copy assignment rbt copy" << endl;
+	//	rbt2.print_helper(rbt2._root, "", true);
+	//	cout << "size : " << rbt2.size() << endl;
+	//	cout << endl;
+	//}
 	
-	//system("leaks containers");
+	//{
+	//	RedBlackTree<const int>						rbt;
+	//	//RedBlackTree<int>						rbt;
+
+	//	const int n1 = 4;
+	//	const int n2 = 2;
+
+	//	rbt.insert_node(n1);
+	//	rbt.insert_node(n2);
+	//	//const RedBlackTree<const int>::const_iterator		rbti = rbt.begin();
+
+	//	//rbt.insert_node(4);
+	//	//rbt.insert_node(2);
+	//	//rbt.insert_node(6);
+	//	//rbt.insert_node(1);
+	//	//rbt.insert_node(3);
+	//	//rbt.insert_node(5);
+	//	//rbt.insert_node(7);
+	//	
+	//	rbt.print_helper(rbt.get_root(), "", true);
+	//	//const ft::map_iterator<const int>	mi = rbt.begin();
+	//	//rbti = rbt.begin();
+	//	const RedBlackTree<const int>::const_iterator it = rbt.begin();
+	//	cout << *it << endl;
+	//	//for (const RedBlackTree<const int>::const_iterator it = rbt.begin(); it != rbt.end(); it++)
+	//	//	cout << *it << endl;
+	//	//for (RedBlackTree<int>::iterator it = rbt.begin(); it != rbt.end(); it++)
+	//	//	cout << *it << endl;
+	//	//cout << endl;
+	//	//cout << endl;
+	//	//for (RedBlackTree<int>::reverse_iterator it = rbt.rbegin(); it != rbt.rend(); it++)
+	//	//	cout << *it << endl;
+	//	//rbt.inorder_traversal(rbti._node->parent);
+	//}
+
+}
+
+void	test_map()
+{
+	//{
+	//	ft::map<int,int>	m;
+	//	cout << endl;
+	//	cout << endl;
+	//	ft::map<int,int>	m2(m);
+
+	//	cout << endl;
+	//	cout << endl;
+	//}
+	
+	//{
+	//	RedBlackTree<ft::pair<int,std::string> >	rbt;
+
+	//	rbt.insert_node(ft::make_pair<int,std::string>(1, "lmao"));
+	//	rbt.insert_node(ft::make_pair<int,std::string>(2, "lol"));
+
+	//	for (RedBlackTree<ft::pair<int,std::string> >::iterator	it = rbt.begin();
+	//			it != rbt.end(); it++)
+	//		cout << "key : \"" << (*it).first << "\"" << "->" << (*it).second << endl;
+	//	//rbt.print_pair(rbt.get_root(), "", true);
+	//	//rbt.print_helper(rbt.get_root(), "", true);
+
+	//	//RedBlackTree<int>	rbt2;
+
+	//	//rbt2.insert_node(1);
+	//	////rbt2.print_helper(rbt2.get_root(), "", true);
+	//	//rbt2.print_helper(rbt2.get_root(), "", true);
+
+	//}
+	
+	{
+		//std::vector<std::pair<const int,std::string> > vec;
+
+		//vec.push_back(std::make_pair<const int, std::string>(1, "lmao"));
+
+		//std::map<const int, std::string>	m(vec.begin(), vec.end());
+
+		//RedBlackTree<ft::pair<int,std::string> >	rbt;
+
+		//rbt.insert_node(ft::make_pair<int,std::string>(1, "lmao1"));
+		//rbt.insert_node(ft::make_pair<int,std::string>(2, "lmao2"));
+		//rbt.insert_node(ft::make_pair<int,std::string>(3, "lmao3"));
+
+		////rbt.print_pair(rbt.get_root(), "", true);
+
+		//RedBlackTree<ft::pair<int,std::string> >	rbt2(rbt.begin(),rbt.end());
+		////rbt2.print(rbt2.get_root(), "", true);
+	}
+
+	//{
+	//	RedBlackTree<ft::pair<int,std::string> > rbt;
+
+	//	rbt.insert_node(ft::make_pair<int, std::string>(3, "lmao1"));
+	//	rbt.insert_node(ft::make_pair<int, std::string>(1, "lmao3"));
+	//	rbt.insert_node(ft::make_pair<int, std::string>(2, "lmao2"));
+	//	rbt.print_pair(rbt.get_root(), "", true);
+	//}
+	
+	//{
+	//	//std::less<const int>	comp;
+	//	//comp(p.first,p2.first);
+	//}
+
+	{
+		//typedef	ft::map<int, std::string>	map_type;
+		//map_type	map;
+		//int	arr[] = {1,2,4,5,6,8,9,7};
+		//int	arr_size = 8;
+
+		//cout << std::boolalpha;
+		//for (int i = 0; i < arr_size; i++)
+		//{
+		//	cout << RED "========================" RESET << endl;
+		//	ft::pair<map_type::iterator, bool>	val = map.insert(ft::make_pair<int, std::string>(arr[i], "lmao " + std::to_string(arr[i])));
+		//	cout << "valid insert : " << val.second << endl;
+		//	cout << "kv pair : " << "[" << (*val.first).first << "], [" << (*val.first).second << "]" << endl;
+		//	cout << RED "========================" RESET << endl;
+		//	cout << endl;
+		//}
+
+		//typedef	std::map<int, std::string>	rmap_type;
+		//rmap_type	rmap;
+		//int	arr[] = {1,1,2,3,4,5,5,1};
+		//int	arr_size = 8;
+
+		//cout << std::boolalpha;
+
+		//for (int i = 0; i < arr_size; i++)
+		//{
+		//	std::pair<rmap_type::iterator, bool>	val = rmap.insert(std::make_pair<int, std::string>(arr[i], "lmao"));
+		//	cout << "valid insert : " << val.second << endl;
+		//	cout << "kv pair : " << "[" << (*val.first).first << "], [" << (*val.first).second << "]" << endl;
+		//	cout << endl;
+		//}
+
+		//typedef	ft::map<int, std::string>	map_type;
+
+		//map_type			map;
+		//map_type::iterator	store;
+		//int	arr[] = {1,2,4,5,6,8,9};
+		//int	arr_size = 7;
+
+		//cout << std::boolalpha;
+		//for (int i = 0; i < arr_size; i++)
+		//{
+		//	cout << RED "========================" RESET << endl;
+		//	ft::pair<map_type::iterator, bool>	val = map.insert(ft::make_pair<int, std::string>(arr[i], "lmao " + std::to_string(arr[i])));
+		//	cout << "valid insert : " << val.second << endl;
+		//	cout << "kv pair : " << "[" << (*val.first).first << "], [" << (*val.first).second << "]" << endl;
+		//	if (arr[i] == 6)
+		//		store = (val.first);
+		//	cout << RED "========================" RESET << endl;
+		//	cout << endl;
+		//}
+		//cout << RED "========================" RESET << endl;
+		//cout << "store : " << "[" << (*store).first << "], [" << (*store).second << "]" << endl;
+		//cout << endl;
+		//map_type::iterator res = map.insert(store, ft::make_pair<int, std::string>(7, "lmao " + std::to_string(7)));
+		//cout << "kv pair : " << "[" << (*res).first << "], [" << (*res).second << "]" << endl;
+		//cout << RED "========================" RESET << endl;
+		//cout << endl;
+	}
+
+	//{
+	//	typedef	ft::map<int, std::string>	map_type;
+
+	//	ft::vector<ft::pair<int, std::string> >	vec;
+	//	int	arr[] = {1,2,4,5,6,8,9,1,2,3};
+	//	int	arr_size = 10;
+
+	//	cout << GREEN "Filling up vector..." RESET << endl;
+	//	for (int i = 0; i < arr_size; i++)
+	//		vec.push_back(ft::make_pair<int, std::string>(arr[i], "lmao " + std::to_string(arr[i])));
+	//	cout << endl;
+
+	//	cout << GREEN "Printing vector..." RESET << endl;
+	//	for (ft::vector<ft::pair<int, std::string> >::iterator it = vec.begin(); it != vec.end(); it++)
+	//		cout << (*it).first << " ";
+	//	cout << endl;
+
+	//	map_type			map;
+	//	cout << GREEN "Filling map using range insert..." RESET << endl;
+	//	map.insert(vec.begin(), vec.end());
+	//	cout << endl;
+
+	//	map_type			map2;
+	//	cout << GREEN "Filling map2 using range insert..." RESET << endl;
+	//	map2.insert(map.begin(), map.end());
+	//	cout << endl;
+
+	//	cout << GREEN "Filling map3 using range constructor..." RESET << endl;
+	//	map_type		map3(map2.begin(), map2.end());
+	//}
+	
+	//{
+	//	typedef	ft::map<int, std::string>	map_type;
+
+	//	ft::vector<ft::pair<int, std::string> >	vec;
+	//	int	arr[] = {1,2,4,5,6,8,9};
+	//	int	arr_size = 7;
+
+	//	cout << GREEN "Filling up vector..." RESET << endl;
+	//	for (int i = 0; i < arr_size; i++)
+	//		vec.push_back(ft::make_pair<int, std::string>(arr[i], "lmao " + std::to_string(arr[i])));
+	//	cout << endl;
+
+	//	cout << GREEN "Printing vector..." RESET << endl;
+	//	for (ft::vector<ft::pair<int, std::string> >::iterator it = vec.begin(); it != vec.end(); it++)
+	//		cout << (*it).first << " ";
+	//	cout << endl;
+
+	//	map_type	map;
+	//	cout << GREEN "Filling map using range insert..." RESET << endl;
+	//	map.insert(vec.begin(), vec.end());
+	//	cout << endl;
+
+	//	cout << std::boolalpha;
+	//	cout << "not empty map is : " << map.empty() << endl;
+	//	cout << "size of map is : " << map.size() << endl;
+
+	//	map_type	map2;
+	//	cout << "empty map is : " << map2.empty() << endl;
+	//	cout << "size of map is : " << map2.size() << endl;
+
+	//	map_type	map3(map.begin(), map.end());
+	//	cout << "not empty map is : " << map3.empty() << endl;
+	//	cout << "size of map is : " << map3.size() << endl;
+
+	//	//std::map<int, std::string> test;
+	//	//cout << "real map size "<< test.max_size() << endl;
+	//	//cout << "real vec size "<< vec.max_size() << endl;
+	//	//cout << "real vec size "<< vec.max_size() / 2<< endl;
+	//	cout << endl;
+
+	//	cout << map.max_size() << endl;
+	//	//cout << endl;
+	//	//cout << endl;
+
+	//	//std::map<int, std::map<int, std::map<int, std::vector<int> > > >	rmap;
+	//	//cout << "max size of s-s map:" << rmap.max_size() << endl;
+	//	cout << endl;
+
+	//	//std::vector<bool>	b;
+	//	//std::vector<long>	l;
+	//	//std::vector<std::string>	s;
+	//	//std::vector<std::string>	lmao;
+	//	//cout << "int vec size :\t\t" << vec.max_size() << endl;
+	//	//cout << "bool vec size :\t\t" << b.max_size() << endl;
+	//	//cout << "long vec size :\t\t" << l.max_size() << endl;
+	//	//cout << "string vec size :\t" << s.max_size() << endl;
+	//	//cout << "test vec size :\t\t" << lmao.max_size() << endl;
+	//	//cout << endl << endl;
+
+	//	//std::map<int,int>			ii;
+	//	//std::map<int,std::string>	is;
+	//	//std::map<int,long>			il;
+	//	//std::map<long,long>			ll;
+	//	//std::map<string,string>		ss;
+	//	//std::map<bool,bool>			bb;
+	//	//cout << "ii map size :\t\t" << ii.max_size() << endl;
+	//	//cout << "is map size :\t\t" << is.max_size() << endl;
+	//	//cout << "il map size :\t\t" << il.max_size() << endl;
+	//	//cout << "ll map size :\t\t" << ll.max_size() << endl;
+	//	//cout << "ss map size :\t\t" << ss.max_size() << endl;
+	//	//cout << "bb map size :\t\t" << bb.max_size() << endl;
+	//	//cout << endl << endl;
+
+	//	//ft::map<int,int>			mii;
+	//	//ft::map<int,std::string>	mis;
+	//	//ft::map<int,long>			mil;
+	//	//ft::map<long,long>			mll;
+	//	//ft::map<string,string>		mss;
+	//	//ft::map<bool,bool>			mbb;
+	//	//cout << "mii map size :\t\t" << mii.max_size() << endl;
+	//	//cout << "mis map size :\t\t" << mis.max_size() << endl;
+	//	//cout << "mil map size :\t\t" << mil.max_size() << endl;
+	//	//cout << "mll map size :\t\t" << mll.max_size() << endl;
+	//	//cout << "mss map size :\t\t" << mss.max_size() << endl;
+	//	//cout << "mbb map size :\t\t" << mbb.max_size() << endl;
+	//	//cout << "mii mmap size :\t\t" << mii.max_size() << endl;
+	//	//cout << endl;
+
+	//	//cout << "mii map size :\t\t" << mii.test_size() << endl;
+	//	//cout << "mis map size :\t\t" << mis.test_size() << endl;
+	//	//cout << "mil map size :\t\t" << mil.test_size() << endl;
+	//	//cout << "mll map size :\t\t" << mll.test_size() << endl;
+	//	//cout << "mss map size :\t\t" << mss.test_size() << endl;
+	//	//cout << "mbb map size :\t\t" << mbb.test_size() << endl;
+	//	//cout << "mii mmap size :\t\t" << mii.test_size() << endl;
+	//	//cout << "mii vmap size :\t\t" << mii.n_size() << endl;
+	//	//cout << "mii nmap size :\t\t" << mii.v_size() << endl;
+	//	//cout << endl;
+	//	//cout << "mis vmap size :\t\t" << mis.n_size() << endl;
+	//	//cout << "mis nmap size :\t\t" << mis.v_size() << endl;
+	//	//cout << endl;
+	//	//cout << "mil vmap size :\t\t" << mil.n_size() << endl;
+	//	//cout << "mil nmap size :\t\t" << mil.v_size() << endl;
+	//	//cout << endl;
+	//	//cout << "mll vmap size :\t\t" << mll.n_size() << endl;
+	//	//cout << "mll nmap size :\t\t" << mll.v_size() << endl;
+	//	//cout << endl;
+	//	//cout << "mss vmap size :\t\t" << mss.n_size() << endl;
+	//	//cout << "mss nmap size :\t\t" << mss.v_size() << endl;
+	//	//cout << endl;
+	//	//cout << "mbb vmap size :\t\t" << mbb.n_size() << endl;
+	//	//cout << "mbb nmap size :\t\t" << mbb.v_size() << endl;
+
+	//	map.max_size();
+	//}
+	
+	//{
+	//	///RedBlackTree<int> rbt;
+
+	//	///rbt.insert_node(1);
+	//	///rbt.insert_node(2);
+
+	//	///RedBlackTree<int>::iterator it;
+
+	//	///it = rbt.begin();
+	//	///cout << *(it + 1) << endl;
+	//	
+	//	typedef	ft::map<int, std::string>	map_type;
+	//	map_type	map;
+	//	int	arr[] = {1,2,4,5,6,8,9,7};
+	//	int	arr_size = 8;
+
+	//	cout << std::boolalpha;
+	//	for (int i = 0; i < arr_size; i++)
+	//	{
+	//		cout << RED "========================" RESET << endl;
+	//		ft::pair<map_type::iterator, bool>	val = map.insert(ft::make_pair<int, std::string>(arr[i], "lmao " + std::to_string(arr[i])));
+	//		cout << "valid insert : " << val.second << endl;
+	//		cout << "kv pair : " << "[" << (*val.first).first << "], [" << (*val.first).second << "]" << endl;
+	//		cout << RED "========================" RESET << endl;
+	//		cout << endl;
+	//	}
+
+	//	cout << "size : " << map.size() << endl;
+	//	for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << endl;
+
+	//	//map[1] = "test";
+	//	//for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//	//	cout << "here : " << (*it).second << endl;
+	//	//cout << "size : " << map.size() << endl;
+	//	//cout << endl;
+
+	//	map.erase(map.begin());
+	//	cout << "size : " << map.size() << endl;
+	//	for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << endl;
+
+	//	cout << "erasing valid key: " << (map.erase(2) ? "true" : "false") << endl;
+	//	cout << "size : " << map.size() << endl;
+	//	for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << endl;
+
+	//	cout << "erasing invalid key: " << (map.erase(1) ? "true" : "false") << endl;
+	//	cout << "size : " << map.size() << endl;
+	//	for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << endl;
+
+	//	cout << "erasing contents 4-6.." << endl;
+	//	cout << "size : " << map.size() << endl;
+	//	map.erase(map.find(4), map.find(6));
+	//	for(map_type::iterator it = map.begin(); it != map.end(); it++)
+	//		cout << (*it).second << endl;
+	//	//cout << endl;
+	//}
+	
+	//{
+	//	typedef	ft::map<int,string>		map_type;
+	//	//typedef	std::map<int,string>	rmap_type;
+
+	//	ft::map<int, string>	map1, map2;
+
+	//	map1[1] = "lmao1";
+	//	map1[2] = "lmao2";
+	//	map1[3] = "lmao3";
+
+	//	map2[6] = "lmao6";
+	//	map2[7] = "lmao7";
+	//	map2[8] = "lmao8";
+	//	map2[9] = "lmao9";
+
+	//	cout << RED "Printing out map1 content..." RESET << endl;
+	//	for (map_type::iterator it = map1.begin(); it != map1.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << "map1 size : " << map1.size() << endl;
+	//	cout << endl;
+
+	//	cout << RED "Printing out map2 content..." RESET << endl;
+	//	for (map_type::iterator it = map2.begin(); it != map2.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << "map2 size : " << map2.size() << endl;
+	//	cout << endl;
+
+	//	cout << MAGENTA "Swapping map1 and map2 contents..." RESET << endl;
+	//	map1.swap(map2);
+
+	//	cout << RED "Printing out map1 content..." RESET << endl;
+	//	for (map_type::iterator it = map1.begin(); it != map1.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << "map1 size : " << map1.size() << endl;
+	//	cout << endl;
+
+	//	cout << RED "Printing out map2 content..." RESET << endl;
+	//	for (map_type::iterator it = map2.begin(); it != map2.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << "map2 size : " << map2.size() << endl;
+	//	cout << endl;
+
+	//	cout << RED "Clearing map1 contents..." RESET << endl;
+	//	map1.clear();
+	//	cout << RED "Printing out map1 content..." RESET << endl;
+	//	for (map_type::iterator it = map1.begin(); it != map1.end(); it++)
+	//		cout << (*it).second << endl;
+	//	cout << "map1 size : " << map1.size() << endl;
+	//	cout << endl;
+
+	//	//std::map<int, string>	rmap;
+
+	//	//rmap[1] = "test";
+	//	//rmap[2] = "test2";
+	//	//cout << "Printing out rmap content..." << endl;
+	//	//for (rmap_type::iterator it = rmap.begin(); it != rmap.end(); it++)
+	//	//	cout << (*it).second << endl;
+	//	//cout << "rmap size : " << rmap.size() << endl;
+	//	//cout << endl;
+
+	//	//rmap.clear();
+	//	//cout << "Printing out rmap content..." << endl;
+	//	//for (rmap_type::iterator it = rmap.begin(); it != rmap.end(); it++)
+	//	//	cout << (*it).second << endl;
+	//	//cout << "rmap size : " << rmap.size() << endl;
+	//	//cout << endl;
+
+	//}
+	
+	//{
+	//	typedef	ft::map<int,string>		map_type;
+	//	typedef	std::map<int,string>	rmap_type;
+
+	//	map_type	map;
+	//	rmap_type	rmap;
+
+	//	map.insert(ft::make_pair(1, "lmao1"));
+	//	map.insert(ft::make_pair(2, "lmao2"));
+	//	map.insert(ft::make_pair(3, "lmao3"));
+	//	map.insert(ft::make_pair(4, "lmao4"));
+	//	map.insert(ft::make_pair(6, "lmao6"));
+	//	//map_type::const_iterator ci;
+
+	//	rmap.insert(std::make_pair(1, "lmao1"));
+	//	rmap.insert(std::make_pair(2, "lmao2"));
+	//	rmap.insert(std::make_pair(3, "lmao3"));
+	//	rmap.insert(std::make_pair(4, "lmao4"));
+	//	rmap.insert(std::make_pair(6, "lmao6"));
+
+	//	//ci = map.find(2);
+	//	//cout << (*ci).first << endl;
+
+	//	//cout << map.count(0) << endl;
+
+	//	cout << "Testing lower bound..." << endl;
+	//	cout << endl;
+	//	for (int i = 0; i < 10; i++)
+	//	{
+	//		cout << "searching for : " << i << endl;
+	//		cout << "mhere = [" << (*map.lower_bound(i)).second << "]" << endl;;
+	//		cout << "rhere = [" << (*rmap.lower_bound(i)).second << "]" << endl;;
+	//		cout << endl;
+	//	}
+	//	cout << endl;
+
+	//	cout << "Testing upper bound..." << endl;
+	//	cout << endl;
+	//	for (int i = 0; i < 10; i++)
+	//	{
+	//		cout << "searching for : " << i << endl;
+	//		cout << "mhere = [" << (*map.upper_bound(i)).second << "]" << endl;;
+	//		cout << "rhere = [" << (*rmap.upper_bound(i)).second << "]" << endl;;
+	//		cout << endl;
+	//	}
+
+	//	//cout << "Finding equal range..." << endl;
+	//	////cout << "rhere = [" << (*(rmap.equal_range(1)).first).first << "]" << endl;;
+	//	////cout << "mhere = [" << (*(map.equal_range(1)).first).first << "]" << endl;;
+	//	//for (int i = 1; i < 7; i++)
+	//	//{
+	//	//	cout << "seaching for : " << i << endl;
+	//	//	cout << "mhere = [" << (*(map.equal_range(i)).first).first << "]" << endl;;
+	//	//	cout << "rhere = [" << (*(rmap.equal_range(i)).first).first << "]" << endl;;
+	//	//	cout << endl;
+	//	//}
+	//}
+	
+	//{
+	//	//typedef	ft::map<const int,const string>		map_type;
+	//	//typedef	std::map<const int,const string>	rmap_type;
+
+	//	//map_type	map;
+	//	//rmap_type	rmap;
+
+	//	//map.insert(ft::make_pair(1, "lmao1"));
+	//	//map.insert(ft::make_pair(2, "lmao2"));
+	//	//map.insert(ft::make_pair(3, "lmao3"));
+	//	//map.insert(ft::make_pair(4, "lmao4"));
+	//	//map.insert(ft::make_pair(6, "lmao6"));
+
+	//	//for (map_type::iterator it = map.begin(); it != map.end(); it++)
+	//	//	cout << (*it).first << endl;
+
+	//	//rmap.insert(std::make_pair(1, "lmao1"));
+	//	//rmap.insert(std::make_pair(2, "lmao2"));
+	//	//rmap.insert(std::make_pair(3, "lmao3"));
+	//	//rmap.insert(std::make_pair(4, "lmao4"));
+	//	//rmap.insert(std::make_pair(6, "lmao6"));
+
+	//	//for (rmap_type::const_iterator it = rmap.begin(); it != rmap.end(); it++)
+	//	//	cout << (*it).first << endl;
+	//}
+	
+	//{
+	//	//typedef	ft::map<int,string>		map_type;
+	//
+	//	//map_type	map;
+	//
+	//	//map.insert(ft::make_pair(1, "lmao1"));
+	//	//map.insert(ft::make_pair(2, "lmao2"));
+	//	//map.insert(ft::make_pair(3, "lmao3"));
+	//	//map.insert(ft::make_pair(4, "lmao4"));
+	//	//map.insert(ft::make_pair(6, "lmao6"));
+
+	//	////map_type::const_reverse_iterator	it = map.begin();
+	//	//ft::map<int,string>::const_reverse_iterator	it = map.begin();
+	//
+	//	//for (map_type::const_reverse_iterator it = map.rbegin(); it != map.rend(); it++)
+	//	//	cout << (*it).first << endl;
+	//}
+	
+	//{
+	//	//typedef	ft::vector<int>	vec_type;
+	//	//ft::vector<int>	vec(10,5);
+	//	////vec_type::const_iterator it = vec.begin();
+	//	////for (vec_type::const_iterator it = vec.begin(); it != vec.end(); it++)
+	//	////	cout << *it << endl;
+	//	//vec_type::const_reverse_iterator it = vec.rbegin();
+	//	////for (vec_type::const_reverse_iterator it = vec.rbegin(); it != vec.rend(); it++)
+	//	////	cout << *it << endl;
+
+	//}
+	
+	//{
+	//	typedef	ft::map<int, int>	map_type;
+	//	map_type	map, map2;
+
+	//	int	arr[] = {1,2,4,5,6,8,9,7};
+	//	int	arr_size = 8;
+
+	//	for (int i = 0; i < arr_size; i++)
+	//	{
+	//		map.insert(ft::make_pair(arr[i], arr[i]));
+	//		map2.insert(ft::make_pair(arr[i], arr[i]));
+	//	}
+
+	//	cout << std::boolalpha;
+	//	//cout << (*map.begin()).first << endl;
+	//	cout << (map == map2) << endl;
+	//	cout << (map != map2) << endl;
+	//	cout << (map <  map2) << endl;
+	//	cout << (map <= map2) << endl;
+	//	cout << (map >  map2) << endl;
+	//	cout << (map >= map2) << endl;
+	//}
 }
 
 int	main(int argc, char **argv)
@@ -1715,5 +2403,6 @@ int	main(int argc, char **argv)
 	//test_stack();
 	//test_pair();
 	//test_bt_node();
-	test_rbt();
+	//test_rbt();
+	test_map();
 }

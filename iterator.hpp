@@ -116,7 +116,7 @@ namespace ft
 	template <class T>
 	struct	enable_if<true, T>
 	{
-		typedef	T		value_type;
+		typedef	T		type;
 	};
 
 	/*
@@ -199,16 +199,24 @@ namespace ft
 			 * (3) Copy Constructor.
 			 * 	Constructs a reverse iterator from another reverse
 			 * 	iterator.
+			 *
+			 * Copy Assignment Operator.
 			 * */
 	
 			reverse_iterator() : _iter() {}
 			explicit reverse_iterator(iterator_type it) : _iter(it) {}
 			reverse_iterator(const reverse_iterator<Iter> &rev_it) : _iter(rev_it._iter) {}
 
+			reverse_iterator	&operator=(const reverse_iterator &other)
+			{
+				this->_iter = other._iter;
+				return (*this);
+			}
+
 			/*
 			 * Reverse Iterator Destructor.
 			 * */
-	
+
 			virtual ~reverse_iterator() {};
 
 			bool operator==(const reverse_iterator &other) const { return this->_iter == other._iter ? true : false; }
@@ -218,17 +226,22 @@ namespace ft
 			bool operator<(const reverse_iterator &other) const { return this->_iter < other._iter; }
 			bool operator<=(const reverse_iterator &other) const { return this->_iter <= other._iter; }
 	
+			//operator	reverse_iterator<const Iter>(void)	const
+			//{
+			//	return (reverse_iterator<const Iter>(this->_iter));
+			//	//return (reverse_iterator<const Iter>(reinterpret_cast<const reverse_iterator>(_iter)));
+			//}
+
+			//operator	const reverse_iterator(void)
+			//{
+			//	return this->_iter;
+			//}
+
 			/*
 			 * Returns a copy of the base iterator.
 			 * */
 	
 			iterator_type base(void) const { return this->_iter; }
-	
-			reverse_iterator	&operator=(const reverse_iterator &other)
-			{
-				this->_iter = other._iter;
-				return (*this);
-			}
 	
 			reverse_iterator	operator+(difference_type n) const
 			{
@@ -334,8 +347,6 @@ namespace ft
 				iterator_type	temp = _iter;
 				return *(--temp - n);
 			}
-
-
 
 		private:
 			iterator_type	_iter;
@@ -501,11 +512,10 @@ namespace ft
 		 * */
 
 		template <class U, class V>
-		pair(const pair<U,V> &pr)
-		{
-			this->first = pr.first;
-			this->second = pr.second;
-		}
+		pair(const pair<U,V> &pr) :
+			first(pr.first),
+			second(pr.second)
+		{ }
 
 		/*
 		 * initialization constructor.
@@ -530,8 +540,6 @@ namespace ft
 		/*
 		 * make_pair.
 		 * */
-
-		friend pair<T1,T2> make_pair(T1 x, T2 y);
 
 		T1		first;
 		T2		second;

@@ -40,6 +40,11 @@ namespace ft
 		bool operator<(const vector_iterator &other) const { return this->_ptr < other._ptr; }
 		bool operator<=(const vector_iterator &other) const { return this->_ptr <= other._ptr; }
 
+		operator	vector_iterator<const value_type>(void) const
+		{
+			return (vector_iterator<const value_type>(this->_ptr));
+		}
+
 		vector_iterator	&operator++() //prefix
 		{ 
 			this->_ptr++;
