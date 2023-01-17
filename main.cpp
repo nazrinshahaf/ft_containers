@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <vector>
+#include <list>
 #include <stack>
 #include <map>
 #include <memory>
@@ -50,6 +52,48 @@ bool	comparison_fnc(int v1, int v2)
 	if (v1 == v2)
 		return true;
 	return false;
+}
+
+template <class T>
+void	print_vec_info(ft::vector<T> vec, std::string text)
+{
+	cout << text << endl << "[";
+	for (typename ft::vector<T>::iterator i = vec.begin(); i != vec.end(); i++)
+	{
+		cout << *i;
+		if (i != vec.end() - 1)
+			cout << ", ";
+	}
+	cout << "]" << endl;
+	cout << "size: " << vec.size() << endl;
+	cout << endl << endl;;
+}
+
+template <class T>
+void	print_vec_info(std::vector<T> vec, std::string text)
+{
+	cout << text << endl << "[";
+	for (typename std::vector<T>::iterator i = vec.begin(); i != vec.end(); i++)
+	{
+		cout << *i;
+		if (i != vec.end() - 1)
+			cout << ", ";
+	}
+	cout << "]" << endl;
+	cout << "size: " << vec.size() << endl;
+	cout << endl << endl;;
+}
+
+template <class T>
+#ifdef	TO_TEST
+void	test_vec_erase(std::vector<T> const &vec, typename std::vector<T>::const_iterator const &it)
+#else
+void	test_vec_erase(ft::vector<T> const &vec, typename ft::vector<T>::const_iterator const &it)
+#endif
+{
+	cout << "IN TEST CASE" << endl;
+	cout << *it << endl;
+	cout << "erase: " << it - vec.begin() << endl;
 }
 
 void	test_actual(char *test)
@@ -1242,6 +1286,212 @@ void	test_vector(void)
 
 	//}
 	
+	//{
+	//	std::list<int> lst;
+	//	std::list<int>::iterator lst_it;
+	//	for (int i = 1; i < 5; ++i)
+	//		lst.push_back(i * 3);
+
+	//	ft::vector<int> vct(lst.begin(), lst.end());
+	//	//printSize(vct);
+
+	//	lst_it = lst.begin();
+	//	for (int i = 1; lst_it != lst.end(); ++i)
+	//		*lst_it++ = i * 5;
+	//	vct.assign(lst.begin(), lst.end());
+	//	//printSize(vct);
+
+	//	vct.insert(vct.end(), lst.rbegin(), lst.rend());
+	//	for (ft::vector<int>::iterator i = vct.begin(); i != vct.end(); i++)
+	//		cout << " final : " << *i << endl;
+	//	//printSize(vct);
+	//}
+
+#ifdef	TO_TEST
+	{
+		cout << MAGENTA "Testing std::" RESET << endl << endl;
+		std::vector<int>				vec;
+		std::vector<int>				vec_temp;
+		std::vector<int>::iterator	it;
+
+		for (int i = 1; i < 6; i++)
+			vec.push_back(i * 3);
+		print_vec_info(vec, "initial");
+		vec_temp = vec;
+
+		cout << "erase 0 from end pos - 1: " << *vec.erase(vec.end() - 1, vec.end() - 1) << endl;
+		print_vec_info(vec, "after");
+		
+		//it = vec.erase(vec.end() - 1);
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 1, vec.end());
+		cout << "erase 1 from end pos: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.begin(), vec.begin() + 2);
+		cout << "erase 2 from start pos: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.begin() + 1, vec.begin() + 3);
+		cout << "erase 2 from start pos + 1: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 2, vec.end());
+		cout << "erase 2 from end pos : ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+		
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 3, vec.end() - 1);
+		cout << "erase 2 from end pos - 1: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+		print_vec_info(vec, "before");
+		test_vec_erase(vec, vec.erase(vec.begin() + 2));
+		//vec.erase(vec.begin() + 2);
+		//cout << "erase 1 from begin + 2: ";
+		//if (it == vec.end())
+		//	cout << "vec.end() [cant print vec.end()]" << endl;
+		//else
+		//	cout << *it << endl;
+		//cout << "tester : " << it - vec.begin() << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+		cout << "erase 2 from begin" << *(vec.erase(vec.begin() + 2)) << endl;
+
+		print_vec_info(vec, "final");
+	}
+#endif
+
+#ifndef	TO_TEST
+	{
+		cout << MAGENTA "Testing ft::" RESET << endl << endl;
+		ft::vector<int>				vec;
+		ft::vector<int>				vec_temp;
+		ft::vector<int>::iterator	it;
+
+		for (int i = 1; i < 6; i++)
+			vec.push_back(i * 3);
+		print_vec_info(vec, "initial");
+		vec_temp = vec;
+
+		cout << "erase 0 from end pos - 1: " << *vec.erase(vec.end() - 1, vec.end() - 1) << endl;
+		print_vec_info(vec, "after");
+		
+		//it = vec.erase(vec.end() - 1);
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 1, vec.end());
+		cout << "erase 1 from end pos: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.begin(), vec.begin() + 2);
+		cout << "erase 2 from start pos: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.begin() + 1, vec.begin() + 3);
+		cout << "erase 2 from start pos + 1: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 2, vec.end());
+		cout << "erase 2 from end pos : ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+		
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+
+		it = vec.erase(vec.end() - 3, vec.end() - 1);
+		cout << "erase 2 from end pos - 1: ";
+		if (it == vec.end())
+			cout << "vec.end() [cant print vec.end()]" << endl;
+		else
+			cout << *it << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+		print_vec_info(vec, "before");
+		test_vec_erase(vec, vec.erase(vec.begin() + 2));
+		//vec.erase(vec.begin() + 2);
+		//cout << "erase 1 from begin + 2: ";
+		//if (it == vec.end())
+		//	cout << "vec.end() [cant print vec.end()]" << endl;
+		//else
+		//	cout << *it << endl;
+		//cout << "tester : " << it - vec.begin() << endl;
+		print_vec_info(vec, "after");
+
+		cout << CYAN "reseting vec..." RESET << endl;
+		vec = vec_temp;
+		it = (vec.erase(vec.begin() + 2));
+		cout << "erase 2 from begin" << *it << endl;
+
+		print_vec_info(vec, "final");
+	}
+#endif
+
 	//test_actual(argv[1]);
 }
 
@@ -2399,7 +2649,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	//test_vector();
+	test_vector();
 	//test_stack();
 	//test_pair();
 	//test_bt_node();

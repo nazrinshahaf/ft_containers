@@ -23,14 +23,17 @@ namespace ft
 		typedef typename ft::iterator<ft::vector_iterator_tag, T>::reference			reference;
 
 		vector_iterator() : _ptr(nullptr) {}
-		vector_iterator(const vector_iterator &other) : _ptr(other._ptr) {}
+		vector_iterator(const vector_iterator<typename ft::remove_const<value_type>::type> &other) : _ptr(other._ptr) {}
+		//vector_iterator(const vector_iterator &other) : _ptr(other._ptr) {}
 		vector_iterator(pointer p) : _ptr(p) {}
 
-        vector_iterator& operator=(const vector_iterator& other)
+        vector_iterator<value_type>	&operator=(vector_iterator<typename ft::remove_const<value_type>::type> const &other)
+        //vector_iterator	&operator=(vector_iterator const &other)
 		{
 			this->_ptr = other._ptr	;
 			return (*this);
 		}
+
 		~vector_iterator() {}
 
 		bool operator==(const vector_iterator &other) const { return this->_ptr == other._ptr ? true : false; }
@@ -40,10 +43,10 @@ namespace ft
 		bool operator<(const vector_iterator &other) const { return this->_ptr < other._ptr; }
 		bool operator<=(const vector_iterator &other) const { return this->_ptr <= other._ptr; }
 
-		operator	vector_iterator<const value_type>(void) const
-		{
-			return (vector_iterator<const value_type>(this->_ptr));
-		}
+		//operator	vector_iterator<const value_type>(void) const
+		//{
+		//	return (vector_iterator<const value_type>(this->_ptr));
+		//}
 
 		vector_iterator	&operator++() //prefix
 		{ 
@@ -67,6 +70,11 @@ namespace ft
 		{
 			this->_ptr += n;
 			return (*this);
+		}
+
+		difference_type	operator+(const vector_iterator &other)
+		{
+			return (this->_ptr + other._ptr);
 		}
 
 		vector_iterator	&operator--() //prefix
@@ -93,9 +101,16 @@ namespace ft
 			return (*this);
 		}
 
+		difference_type	operator-(const vector_iterator &other) const
+		{
+			return (this->_ptr - other._ptr);
+		}
+
 		reference	operator*(void) const { return *this->_ptr ; }
 		pointer		operator->(void) const { return this->_ptr ; }
 		reference	operator[](size_t n) const {return *(this->_ptr + n); }
+
+		pointer		getPtr(void) const { return this->_ptr ; }
 
 		pointer	_ptr;
 	};

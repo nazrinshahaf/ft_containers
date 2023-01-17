@@ -76,10 +76,6 @@ struct Node
  * Based of bidirectional iterator.
  * */
 
-template<class T> struct remove_const { typedef T type; };
-
-template<class T> struct remove_const <const T> { typedef T type; };
-
 namespace ft
 {
 	template <class	T>
@@ -91,13 +87,13 @@ namespace ft
 			typedef typename ft::iterator<ft::map_iterator_tag, T>::difference_type		difference_type;
 			typedef typename ft::iterator<ft::map_iterator_tag, T>::pointer				pointer;
 			typedef typename ft::iterator<ft::map_iterator_tag, T>::reference			reference;
-			typedef Node<typename remove_const<value_type>::type>*						node_pointer;
+			typedef Node<typename ft::remove_const<value_type>::type>*						node_pointer;
 			//typedef typename Node<T>::node_ptr											node_pointer;
 			//typedef Node<T>																*node_pointer;
 			//typedef Node<const T>														*const_node_pointer;
 
 			map_iterator() : _node(nullptr) {}
-			map_iterator(const map_iterator<typename remove_const<value_type>::type> &other) : _node(other._node) {}
+			map_iterator(const map_iterator<typename ft::remove_const<value_type>::type> &other) : _node(other._node) {}
 			//map_iterator(const map_iterator &other) : _node(other._node) {}
 			map_iterator(node_pointer n) : _node(n) {}
 

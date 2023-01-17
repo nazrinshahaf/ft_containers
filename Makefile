@@ -29,6 +29,13 @@ leaks: re
 test: re
 	$(re) ./$(NAME)
 
+ft: re
+	$(re) ./$(NAME)
+
+std: re
+	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D TO_TEST
+	./$(NAME) 
+
 print: re
 	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D PRINT_MSG
 	./$(NAME)

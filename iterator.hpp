@@ -361,13 +361,15 @@ namespace ft
 	typename ft::iterator_traits<InputIterator>::difference_type
 		distance(InputIterator first, InputIterator last)
 	{
-		typename InputIterator::difference_type	d = 0;
+		typename InputIterator::difference_type	distance = 0;
 
-		if (first < last)
-			for (; first != last; d++, first++) ;
-		else
-			for (; first != last; d--, first--) ;
-		return (d);
+		for (; first != last; distance++, first++) ;
+		return (distance);
+		//if (first < last)
+		//	for (; first != last; distance++, first++) ;
+		//else
+		//	for (; first != last; distance--, first--) ;
+		//return (distance);
 	}
 
 	/*
@@ -587,6 +589,17 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
+
+	/*
+	 * remove_const.
+	 *
+	 * Bullshit I have to add to fix const_conversion. Idk if this is right or not.
+	 * Just saw someone else do it.
+	 * */
+
+	template<class T> struct remove_const { typedef T type; };
+	template<class T> struct remove_const <const T> { typedef T type; };
+
 }
 
 #endif

@@ -51,8 +51,9 @@ namespace ft
 				_end(nullptr),
 				_capacity(nullptr)
 			{
-				if (this->_print_msg)
+#ifdef	PRINT_MSG
 					cout << GREEN "Vector Empty Containter Constructor called" RESET << endl;
+#endif
 			}
 
 			/*
@@ -75,8 +76,9 @@ namespace ft
 					const allocator_type &alloc = allocator_type()) : 
 				_alloc(alloc)
 			{
-				if (this->_print_msg)
+#ifdef	PRINT_MSG
 					cout << GREEN "Vector Fill Constructor called" RESET << endl;
+#endif
 
 				if (n > this->_alloc.max_size())
 					throw std::length_error("ft::vector length_error");
@@ -143,8 +145,9 @@ namespace ft
 						InputIterator>::type* = nullptr) :
 				_alloc(alloc)
 			{
-				if (this->_print_msg)
-					cout << GREEN "Vector Range Constructor called" RESET << endl;
+#ifdef	PRINT_MSG
+				cout << GREEN "Vector Range Constructor called" RESET << endl;
+#endif
 				//need a check to see wheather it is a valid iterator
 
 				//replace with ft::distance when implemented
@@ -173,8 +176,9 @@ namespace ft
 				_end(_start),
 				_capacity(_start + other.capacity())
 			{
-				if (this->_print_msg)
-					cout << GREEN "Vector Copy Constructor called" RESET << endl;
+#ifdef PRINT_MSG
+				cout << GREEN "Vector Copy Constructor called" RESET << endl;
+#endif
 				for (int i = 0; i < (int)other.size(); i++, this->_end++)
 					this->_alloc.construct(this->_end, other[i]);
 			}
@@ -191,8 +195,9 @@ namespace ft
 
 			~vector()
 			{
-				if (this->_print_msg)
-					cout << RED "Vector Destructor called" RESET << endl;
+#ifdef	PRINT_MSG
+				cout << RED "Vector Destructor called" RESET << endl;
+#endif
 				for (pointer i = this->_start; i < this->_end; i++)
 					this->_alloc.destroy(i);
 				this->_alloc.deallocate(this->_start, this->_capacity - this->_start);
@@ -377,7 +382,7 @@ namespace ft
 			}
 
 			/*
-			 * single element Insert
+			 * single element insert
 			 * Insert single element before the position of the iterator.
 			 *
 			 * The rest of the vector will remain the same. 
@@ -449,7 +454,7 @@ namespace ft
 			}
 
 			/*
-			 * fill Insert.
+			 * fill insert.
 			 * Insert the given value 'n' amount of times before
 			 * the position given.
 			 *
@@ -602,11 +607,30 @@ namespace ft
 				//cout << "passed" << endl;
 
 				//for (int i = 0; i < (int)this->capacity(); i++)
+				//{
 				//	cout << " out: " << (*this)[i] << endl;
+				//	//cout << " out: " << &(*this)[i] << endl;
+				//}
+
+				//cout << endl;
+				//for (InputIterator t = first; t != last; t++)
+				//	cout << " test : " << *t<< endl;
 				//cout << endl;
 
-				for (size_type i = range_len; i; i--, place_end--)
+				//for (InputIterator t = last - 1; t != first; t--)
+				//	cout << " test : " << *t << endl;
+				//cout << endl;
+
+				//cout << "first : " << *first << endl;
+				//cout << "first : " << &first << endl;
+				//--first;
+				//cout << "first : " << *first << endl;
+				//cout << "first : " << &first << endl;
+				InputIterator	temp = --last;
+				//cout << " out to add: " << *temp << endl;
+				for (size_type i = range_len; i > 0; i--, place_end--, temp--)
 				{
+					//cout << " to add: " << *temp << endl;
 					//for (int i = 0; i < (int)this->capacity(); i++)
 					//	cout << " in: " << (*this)[i] << endl;
 					//cout << endl;
@@ -618,17 +642,19 @@ namespace ft
 						this->_alloc.destroy(place_end);
 						//cout << "added: " << *(first + i -1) << endl;
 					}
-					this->_alloc.construct(place_end, *(first + i - 1));
+					//cout << " added: " << *(temp) << endl;
+					this->_alloc.construct(place_end, *(temp));
 					//t++;
 				}
 				//for (int i = 0; i < (int)this->capacity(); i++)
-				//	cout << t << " out: " << (*this)[i] << endl;
+				//	cout << " out: " << (*this)[i] << endl;
 				//cout << endl;
 
 				this->_end += range_len;
 			}
 
 			/*
+			 * single erase.
 			 * Removes a single element pointed at by position.
 			 *
 			 * The element has to re-shift to fill in the position
@@ -636,20 +662,22 @@ namespace ft
 			 *
 			 * Returns a value to current element in that position.
 			 *
-			 * @param 'position' : the position of the element
-			 * 	to remove.
+			 * If position == end() just let it crash.
+			 * If position == end() - 1:
+			 * 	pop_back()
+			 *
 			 * */
 
-			iterator erase(iterator position)
+			iterator	erase(iterator position)
 			{
-				if (position == this->end())
+				if (position == this->end() - 1)
 				{
 					this->pop_back();
-					return (iterator(this->_end - 1));
+					return (this->end());
 				}
 
 				size_type	dis	= ft::distance(iterator(this->begin()), position);
-				cout << "dis : " << dis << endl;
+				//cout << "dis : " << dis << endl;
 
 				//pointer	place_end = this->_end - 2;
 				pointer		take_end = this->_end - 1;
@@ -696,8 +724,94 @@ namespace ft
 				//this->_alloc.construct(place_end, take_val);
 
 				this->_end--;
+				//for (size_type i = 0; i != this->size(); i++)
+				//	cout << (*this)[i] << endl;
+				return (iterator(this->_start + dis));
+			}
 
-				return (iterator(this->_end + dis));
+			/*
+			 * range erase.
+			 * Removes a range of elements pointed at between first and last.
+			 *
+			 * The element has to re-shift to fill in the position
+			 * of the element that has been removed.
+			 *
+			 * Returns a value to current element in that position.
+			 *
+			 * If distance 0 do let it break.
+			 * If distance 1 use normal erase.
+			 *
+			 * @note: 
+			 * 	first for loop is for replacing the to_del values with the values
+			 * 	at the front
+			 * 	this has to be done for as long as place_pos != _end
+			 * 	vec.delete(vec.begin(), vec.begin() + 2)
+			 * 		[3,6,9,12,15]
+			 * 		replacing 3 with 9 (3 + dis)
+			 * 		[9,6,9,12,15]
+			 * 		replacing 6 with 12 (6 + dis)
+			 * 		[9,12,9,12,15]
+			 * 		replacing 9 with 15 (9 + dis)
+			 * 		[9,12,15,12,15]
+			 *
+			 * 	second loop is for deleting the amount of elements at the end
+			 * 	this is almost done dis amount of times.
+			 * 		[9,12,15,12,15] -> [9,12,15,_,15]
+			 * 		[9,12,15,_,15] -> [9,12,15,_,_]
+			 *
+			 * @param 'first' : the starting of the range of values to erase
+			 * 	the vector with.
+			 * @param 'last' : the ending of the range of values to erase
+			 * 	the vector with.
+			 * */
+
+			iterator	erase(iterator first, iterator last)
+			{
+				if (ft::distance(first, last) <= 1)
+				{
+					if (ft::distance(first, last) == 0)
+						return (last);
+					return (erase(first));
+				}
+
+				size_type	dis = ft::distance(first, last);
+				size_type	first_dis = ft::distance(this->begin(), first);
+				//cout << "dis: " << dis << endl;
+				//cout << endl;
+
+				pointer	take_pos = this->_start + ft::distance(this->begin(), first);
+				pointer	place_pos = take_pos + dis;
+
+				//cout << "take_pos : " << *take_pos << endl;
+				//cout << "place_pos : " << *place_pos << endl;
+				//cout << endl;
+
+				for (size_type i = this->size() - dis; place_pos != this->_end; i--, take_pos++, place_pos++)
+				{
+					//cout << "i: " << i << endl;
+					//cout << "destroyed : " << *take_pos << endl;
+					//cout << "added : " << *place_pos << endl;
+					this->_alloc.destroy(take_pos);
+					//*take_pos = 0;
+					this->_alloc.construct(take_pos, *place_pos);
+				}
+				//cout << endl;
+
+				//cout << "take_pos : " << *take_pos << endl;
+				//cout << endl;
+
+				for (size_type i = dis; i; i--, take_pos++)
+				{
+					//*take_pos = 0;
+					this->_alloc.destroy(take_pos);
+				}
+
+				//for (size_type i = 0; i < this->capacity(); i++)
+				//	cout << "final in : " << (*this)[i] << endl;
+				//cout << endl;
+
+				this->_end -= dis;
+				return (iterator(this->_start + first_dis));
 			}
 
 			/*
@@ -922,20 +1036,38 @@ namespace ft
 
 			/*
 			 * Returns a reference to the element pointed at 
-			 * by vector at position n.
+			 * by vector at position pos.
 			 *
 			 * Unlink the index operator this function 
 			 * does throw error for out of bounds. 
 			 * This is safer than the index operator.
 			 *
-			 * @param 'n' : the position of the element to check.
+			 * @param 'pos' : the position of the element to check.
 			 * */
 
-			reference			at(size_type n)
+			reference			at(size_type pos)
 			{
-				if (n > this->size() - 1)
+				if (pos > this->size() - 1)
 					throw std::out_of_range("ft::vector out_of_range");
-				return (this->_start[n]);
+				return (this->_start[pos]);
+			}
+
+			/*
+			 * Returns a reference to the element pointed at 
+			 * by vector at position pos.
+			 *
+			 * Unlink the index operator this function 
+			 * does throw error for out of bounds. 
+			 * This is safer than the index operator.
+			 *
+			 * @param 'pos' : the position of the element to check.
+			 * */
+
+			const_reference	at(size_type pos) const
+			{
+				if (pos > this->size() - 1)
+					throw std::out_of_range("ft::vector out_of_range");
+				return (this->_start[pos]);
 			}
 
 			/*
@@ -997,8 +1129,6 @@ namespace ft
 			pointer				_start;
 			pointer				_end;
 			pointer				_capacity;
-			const static int	_print_msg = 1;
-
 	};
 
 	template <class T, class Alloc>
@@ -1071,7 +1201,7 @@ namespace ft
 
 		explicit vector(const allocator_type &alloc = allocator_type());
 		explicit vector(size_type n, const value_type &val = value_type(),
-				const allocator_type &alloc = allocator_type())
+							const allocator_type &alloc = allocator_type())
 
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last,
@@ -1094,13 +1224,14 @@ namespace ft
 		void		pop_back(void);
 		iterator	insert(iterator position, const value_type& val);
 		void 		insert(iterator position, size_type n,
-			const value_type& val);
+						const value_type& val);
 
-		template<class InputIterator>
+		template <class InputIterator>
 		void		insert(iterator position, InputIterator first, 
-			InputIterator last);
+						InputIterator last);
 
 		iterator	erase(iterator position);
+		iterator	erase(iterator first, iterator last);
 		void		swap(vector &other);
 		void		clear(void);
 
@@ -1115,7 +1246,8 @@ namespace ft
 
 
 		const_reference		operator[](size_type n) const;
-		reference			at(size_type n);
+		reference			at(size_type pos);
+		const_reference		at(size_type pos) const;
 		reference			front(void);
 		const_reference		front(void) const;
 		reference			back(void);
