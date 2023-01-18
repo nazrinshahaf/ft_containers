@@ -41,8 +41,9 @@ namespace ft
 		explicit stack(const container_type &ctnr = container_type()) :
 			_container(ctnr)
 		{
-			if (this->_print_msg)
-				cout << GREEN "Stack Empty Containter Constructor called" RESET << endl;
+#ifdef PRINT_MSG
+			cout << GREEN "Stack Empty Containter Constructor called" RESET << endl;
+#endif
 		}
 
 		/*
@@ -56,8 +57,9 @@ namespace ft
 		stack(const stack &other) :
 			_container(other._container)
 		{
-			if (this->_print_msg)
-				cout << GREEN "Stack Copy Constructor called" RESET << endl;
+#ifdef PRINT_MSG
+			cout << GREEN "Stack Copy Constructor called" RESET << endl;
+#endif
 		}
 
 		/*
@@ -70,8 +72,9 @@ namespace ft
 
 		~stack()
 		{
-			if (this->_print_msg)
-				cout << RED "Stack Destructor Constructor called" RESET << endl;
+#ifdef PRINT_MSG
+			cout << RED "Stack Destructor Constructor called" RESET << endl;
+#endif
 		}
 
 		/*
