@@ -49,7 +49,8 @@ namespace ft
 	 * Iterator_traits is the type trait class that provides uniform interface.
 	 * This makes it possible to implement algorithms in terms of ONLY iterators.
 	 *
-	 * @edit : idk what this means yet.
+	 * @note : seems very redundent to have it like this.
+	 *
 	 * @template 'Iter' : Passing the unkown Iterator as the template
 	 * */
 
@@ -67,7 +68,6 @@ namespace ft
 	 * Iterator_traits is the type trait class that provides uniform interface.
 	 * This makes it possible to implement algorithms in terms of ONLY iterators.
 	 *
-	 * @edit : idk what this means yet.
 	 * @template 'T' : Passing the unkown type T as the template
 	 * */
 
@@ -85,7 +85,6 @@ namespace ft
 	 * Iterator_traits is the type trait class that provides uniform interface.
 	 * This makes it possible to implement algorithms in terms of ONLY iterators.
 	 *
-	 * @edit : idk what this means yet.
 	 * @template 'T' : Passing the unkown type const T as the template
 	 * */
 
@@ -353,7 +352,12 @@ namespace ft
 	};
 
 	/*
-	 * distance
+	 * distance.
+	 *
+	 * Gets the distance between 2 iterators.
+	 *
+	 * @param 'first' : The iterator at the starting point of the distance.
+	 * @param 'last' : The iterator at the end point of the distance.
 	 * */
 
 

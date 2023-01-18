@@ -10,7 +10,7 @@ SRC =
 MAIN = main.cpp
 
 $(NAME):
-	$(CC) $(CFLAGS) $(SANITIZE) $(MAIN) $(SRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(SANITIZE) $(MAIN) $(SRC) -o $(NAME) -D NAME_SPACE=ft
 
 all: $(NAME)
 
@@ -29,11 +29,12 @@ leaks: re
 test: re
 	$(re) ./$(NAME)
 
-ft: re
-	$(re) ./$(NAME)
+ft: clean
+	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D TO_TEST -D NAME_SPACE=ft
+	./$(NAME)
 
-std: re
-	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D TO_TEST
+std: clean
+	$(CC) $(CFLAGS) $(C98) $(MAIN) $(SRC) -o $(NAME) -D TO_TEST -D NAME_SPACE=std
 	./$(NAME) 
 
 print: re

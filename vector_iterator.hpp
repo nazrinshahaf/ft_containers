@@ -7,7 +7,10 @@
  * Underling iterator for vector.
  *
  * Based of random access iterator.
- * Implementing without const iterator
+ *
+ * Implementing without making duplicate 
+ * const iterator
+ *
  * https://stackoverflow.com/a/22801650
  * */
 
@@ -36,13 +39,6 @@ namespace ft
 
 		~vector_iterator() {}
 
-		bool operator==(const vector_iterator &other) const { return this->_ptr == other._ptr ? true : false; }
-		bool operator!=(const vector_iterator &other) const { return this->_ptr == other._ptr ? false : true; }
-		bool operator>(const vector_iterator &other) const { return this->_ptr > other._ptr; }
-		bool operator>=(const vector_iterator &other) const { return this->_ptr >= other._ptr; }
-		bool operator<(const vector_iterator &other) const { return this->_ptr < other._ptr; }
-		bool operator<=(const vector_iterator &other) const { return this->_ptr <= other._ptr; }
-
 		//operator	vector_iterator<const value_type>(void) const
 		//{
 		//	return (vector_iterator<const value_type>(this->_ptr));
@@ -61,12 +57,12 @@ namespace ft
 			return (temp);
 		}
 
-		vector_iterator	operator+(size_t n) const
+		vector_iterator	operator+(difference_type n) const
 		{
 			return (this->_ptr + n);
 		}
 
-		vector_iterator	&operator+=(size_t n)
+		vector_iterator	&operator+=(difference_type n)
 		{
 			this->_ptr += n;
 			return (*this);
@@ -90,12 +86,12 @@ namespace ft
 			return (temp);
 		}
 
-		vector_iterator	operator-(size_t n) const
+		vector_iterator	operator-(difference_type n) const
 		{
 			return (this->_ptr - n);
 		}
 
-		vector_iterator	&operator-=(size_t n)
+		vector_iterator	&operator-=(difference_type n)
 		{
 			this->_ptr -= n;
 			return (*this);
@@ -108,12 +104,70 @@ namespace ft
 
 		reference	operator*(void) const { return *this->_ptr ; }
 		pointer		operator->(void) const { return this->_ptr ; }
-		reference	operator[](size_t n) const {return *(this->_ptr + n); }
+		reference	operator[](difference_type n) const {return *(this->_ptr + n); }
 
 		pointer		getPtr(void) const { return this->_ptr ; }
 
 		pointer	_ptr;
+
 	};
+
+	/*
+	 * Arithmetic operator for 1 + it
+	 *
+	 * @note : cant put it inside as the literal position of lhs and rhs matters.
+	 * 	it + 1 calls normal + operator but
+	 * 	1 + it doesnt as the it is on the rhs and by default member functions always assume
+	 * 	its on the left.
+	 * */
+
+	template <class T>
+	vector_iterator<T> operator+(typename vector_iterator<T>::difference_type n, const vector_iterator<T> &other)
+	{
+		return (other + n);
+	}
+
+	/*
+	 * Comparison Operators.
+	 *
+	 * @note : had to bring it out of class as it had some const conversion issues.
+	 * */
+
+	template <class T, class U>
+	bool	operator==(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr == rhs._ptr);
+	}
+
+	template <class T, class U>
+	bool	operator!=(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr != rhs._ptr);
+	}
+
+	template <class T, class U>
+	bool	operator<(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr < rhs._ptr);
+	}
+
+	template <class T, class U>
+	bool	operator<=(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr <= rhs._ptr);
+	}
+
+	template <class T, class U>
+	bool	operator>(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr > rhs._ptr);
+	}
+
+	template <class T, class U>
+	bool	operator>=(const vector_iterator<T> & lhs, const vector_iterator<U> & rhs)
+	{
+		return (lhs._ptr >= rhs._ptr);
+	}
 }
 
 #endif

@@ -406,10 +406,10 @@ namespace ft
 
 			iterator	insert(iterator position, const value_type& val)
 			{
-				if (this->_end == this->_capacity)
+				if (this->_end == this->_capacity && position == this->end())
 				{
 					this->push_back(val);
-					return (this->begin());
+					return (this->end() - 1);
 				}
 
 				//replace with ft::distance when implemented
@@ -666,6 +666,8 @@ namespace ft
 			 * If position == end() - 1:
 			 * 	pop_back()
 			 *
+			 * @param 'position' : the position of the element
+			 * 	to remove.
 			 * */
 
 			iterator	erase(iterator position)
