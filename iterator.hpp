@@ -170,6 +170,15 @@ namespace ft
 	//template <>
 	//struct is_integral<long long> : is_integral_base<true, long long> { };
 	
+	/*
+	 * remove_const.
+	 *
+	 * Bullshit I have to add to fix const_conversion. Idk if this is right or not.
+	 * Just saw someone else do it.
+	 * */
+
+	template<class T> struct remove_const { typedef T type; };
+	template<class T> struct remove_const <const T> { typedef T type; };
 
 	/*
 	 * Reverse Iterator
@@ -593,16 +602,6 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
-
-	/*
-	 * remove_const.
-	 *
-	 * Bullshit I have to add to fix const_conversion. Idk if this is right or not.
-	 * Just saw someone else do it.
-	 * */
-
-	template<class T> struct remove_const { typedef T type; };
-	template<class T> struct remove_const <const T> { typedef T type; };
 
 }
 
