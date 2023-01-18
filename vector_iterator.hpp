@@ -106,7 +106,7 @@ namespace ft
 		pointer		operator->(void) const { return this->_ptr ; }
 		reference	operator[](difference_type n) const {return *(this->_ptr + n); }
 
-		pointer		getPtr(void) const { return this->_ptr ; }
+		pointer		base(void) const { return this->_ptr ; }
 
 		pointer	_ptr;
 
@@ -122,9 +122,18 @@ namespace ft
 	 * */
 
 	template <class T>
-	vector_iterator<T> operator+(typename vector_iterator<T>::difference_type n, const vector_iterator<T> &other)
+	vector_iterator<T> operator+(typename vector_iterator<T>::difference_type n,
+									const vector_iterator<T> &other)
 	{
 		return (other + n);
+	}
+
+	template <class T, class U>
+	typename vector_iterator<T>::difference_type
+		operator-(const vector_iterator<U> &lhs,
+				const vector_iterator<T> &rhs)
+	{
+		return (lhs.base() - rhs.base());
 	}
 
 	/*

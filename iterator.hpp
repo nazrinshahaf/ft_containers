@@ -169,6 +169,30 @@ namespace ft
 	//long long is a c++11 feature
 	//template <>
 	//struct is_integral<long long> : is_integral_base<true, long long> { };
+
+	/*
+	 * distance.
+	 *
+	 * Gets the distance between 2 iterators.
+	 *
+	 * @param 'first' : The iterator at the starting point of the distance.
+	 * @param 'last' : The iterator at the end point of the distance.
+	 * */
+
+	template <class InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type
+		distance(InputIterator first, InputIterator last)
+	{
+		typename InputIterator::difference_type	distance = 0;
+
+		for (; first != last; distance++, first++) ;
+		return (distance);
+		//if (first < last)
+		//	for (; first != last; distance++, first++) ;
+		//else
+		//	for (; first != last; distance--, first--) ;
+		//return (distance);
+	}
 	
 	/*
 	 * remove_const.
@@ -177,11 +201,11 @@ namespace ft
 	 * Just saw someone else do it.
 	 * */
 
-	template<class T> struct remove_const { typedef T type; };
-	template<class T> struct remove_const <const T> { typedef T type; };
+	template <class T> struct remove_const { typedef T type; };
+	template <class T> struct remove_const <const T> { typedef T type; };
 
 	/*
-	 * Reverse Iterator
+	 * reverse iterator
 	 *
 	 * @edit : might have to add non member functions 
 	 * (comparison and +- operators)
@@ -206,14 +230,26 @@ namespace ft
 			 * 	was not neccerily a reverse iterator.
 			 * (3) Copy Constructor.
 			 * 	Constructs a reverse iterator from another reverse
-			 * 	iterator.
+			 * 	iterator. Needs to be templated to participate
+			 * 	in overload resolution only if I 
+			 * 	is not the same type as Iter.
+			 *
+			 * 	@note : other cant access _iter, as techincally
+			 * 	reverse_iterator<iterator<int>> is not the same 
+			 * 	reverse_iteartor<interator<const int>>
 			 *
 			 * Copy Assignment Operator.
 			 * */
+
+		protected:
+			iterator_type	_iter;
 	
+		public:
 			reverse_iterator() : _iter() {}
 			explicit reverse_iterator(iterator_type it) : _iter(it) {}
-			reverse_iterator(const reverse_iterator<Iter> &rev_it) : _iter(rev_it._iter) {}
+
+			template <class I>
+			reverse_iterator(const reverse_iterator<I> &other) : _iter(other.base()) {} 
 
 			reverse_iterator	&operator=(const reverse_iterator &other)
 			{
@@ -227,13 +263,6 @@ namespace ft
 
 			virtual ~reverse_iterator() {};
 
-			bool operator==(const reverse_iterator &other) const { return this->_iter == other._iter ? true : false; }
-			bool operator!=(const reverse_iterator &other) const { return this->_iter != other._iter ? true : false; }
-			bool operator>(const reverse_iterator &other) const { return this->_iter > other._iter; }
-			bool operator>=(const reverse_iterator &other) const { return this->_iter >= other._iter; }
-			bool operator<(const reverse_iterator &other) const { return this->_iter < other._iter; }
-			bool operator<=(const reverse_iterator &other) const { return this->_iter <= other._iter; }
-	
 			//operator	reverse_iterator<const Iter>(void)	const
 			//{
 			//	return (reverse_iterator<const Iter>(this->_iter));
@@ -342,7 +371,7 @@ namespace ft
 
 			pointer		operator->() const
 			{
-				return *(operator*());
+				return &(operator*());
 			}
 
 			/*
@@ -356,33 +385,91 @@ namespace ft
 				return *(--temp - n);
 			}
 
-		private:
-			iterator_type	_iter;
+			//difference_type	operator-(const reverse_iterator& rhs)
+			//{
+			//	return (rhs.base() - this->base());
+			//}
 	};
 
 	/*
-	 * distance.
+	 * Arithmetic operator for 1 + it
 	 *
-	 * Gets the distance between 2 iterators.
-	 *
-	 * @param 'first' : The iterator at the starting point of the distance.
-	 * @param 'last' : The iterator at the end point of the distance.
+	 * @note : cant put it inside as the literal position of lhs and rhs matters.
+	 * 	it + 1 calls normal + operator but
+	 * 	1 + it doesnt as the it is on the rhs and by default member functions always assume
+	 * 	its on the left.
 	 * */
 
-
-	template <class InputIterator>
-	typename ft::iterator_traits<InputIterator>::difference_type
-		distance(InputIterator first, InputIterator last)
+	template <class Iter>
+	reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n,
+			const reverse_iterator<Iter> &other)
 	{
-		typename InputIterator::difference_type	distance = 0;
+		return (other + n);
+	}
 
-		for (; first != last; distance++, first++) ;
-		return (distance);
-		//if (first < last)
-		//	for (; first != last; distance++, first++) ;
-		//else
-		//	for (; first != last; distance--, first--) ;
-		//return (distance);
+	/*
+	 * Arithmetic operator for rit1 - rit2.
+	 *
+	 * Returns the a reverse_iterator to distance between two reverse iterators.
+	 * */
+
+	template <class Iter1, class Iter2>
+	typename reverse_iterator<Iter1>::difference_type
+		operator-(const reverse_iterator<Iter1> &lhs,
+					const reverse_iterator<Iter2> &rhs)
+	{
+		return (rhs.base() - lhs.base());
+	}
+
+	//template <class Iter>
+	//typename reverse_iterator<Iter>::difference_type
+	//	operator-(const reverse_iterator<Iter> &lhs,
+	//				const reverse_iterator<Iter> &rhs)
+	//{
+	//	return (rhs.base() - lhs.base());
+	//}
+
+	//template <class Iter1, class Iter2>
+	//bool	operator-(const reverse_iterator<Iter1> &lhs,
+	//					const reverse_iterator<Iter2> &rhs)
+	//{
+	//	return (lhs.base() - rhs.base());
+	//}
+	
+	template <class Iter1, class Iter2>
+	bool operator==(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() == rhs.base());
+	}
+
+	template <class Iter1, class Iter2>
+	bool operator!=(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() != rhs.base());
+	}
+
+	template <class Iter1, class Iter2>
+	bool operator<(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() > rhs.base());
+	}
+
+	template <class Iter1, class Iter2>
+	bool operator<=(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() >= rhs.base());
+	}
+
+	template <class Iter1, class Iter2>
+	bool operator>(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() < rhs.base());
+	}
+
+	template <class Iter1, class Iter2>
+	bool operator>=(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
+	{
+		return (lhs.base() <= rhs.base());
 	}
 
 	/*

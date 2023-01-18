@@ -51,7 +51,7 @@ void	vector_iterator_1()
 	const int size = 5;
 	NAME_SPACE::vector<int> vec(size);
 	NAME_SPACE::vector<int>::iterator it = vec.begin();
-	//NAME_SPACE::vector<int>::const_iterator ite = vec.begin();
+	NAME_SPACE::vector<int>::const_iterator ite = vec.begin();
 
 	for (int i = 0; i < size; ++i)
 		it[i] = (size - i) * 5;
@@ -84,7 +84,59 @@ void	vector_iterator_1()
 	print_vec_info(vec, "final");
 }
 
+void	reverse_iterator()
+{
+	cout << CYAN "Testing vector reverse_iterator using " << xstr(NAME_SPACE) RESET << endl << endl;
+
+	const int size = 5;
+	NAME_SPACE::vector<int> vec(size);
+	NAME_SPACE::vector<int>::reverse_iterator rit = vec.rbegin();
+	NAME_SPACE::vector<int>::const_reverse_iterator crit = vec.rbegin();
+
+	for (int i = 0; i < size; ++i)
+		rit[i] = (size - i) * 5;
+	print_vec_info(vec, "initial");
+
+	//cout << "rit = " << *rit << endl;
+	rit = rit + 5;
+	//cout << "rit + 5 = ";
+	//if (rit == vec.rend())
+	//	cout << "vec.rend() " << endl;
+	//else
+	//	cout << *rit << endl;
+
+	rit = 1 + rit;
+	//if (rit < vec.rend())
+	//	cout << "vec.rend() " << endl;
+	//else
+	//	cout << *rit << endl;
+
+	rit = rit - 4;
+	//std::cout << "*(rit += 2) = " << *(rit += 2) << std::endl;
+	//std::cout << "*(rit -= 1) = " << *(rit -= 1) << std::endl;
+
+	*(rit -= 2) = 42;
+	*(rit += 2) = 21;
+
+	print_vec_info(vec, "new");
+
+	cout << "crit = " << *crit << endl;
+	std::cout << "const_ite +=2 / -=2: " << *(crit += 2) << " | " << *(crit -= 2) << std::endl;
+	cout << endl;
+
+	//std::cout << "(rit == const_it): " << (crit == rit) << std::endl;
+	
+	cout << "rit = " << *rit << endl;
+	cout << "crit = " << *crit << endl;
+	std::cout << "(crit - rit): " << (crit - rit) << std::endl;
+	std::cout << "(rit - crit): " << (rit - crit) << std::endl;
+	std::cout << "(crit + 3 == rit): " << (crit + 3 == rit) << std::endl;
+
+	print_vec_info(vec, "final");
+}
+
 void vector_iterator()
 {
-	vector_iterator_1();
+	//vector_iterator_1();
+	reverse_iterator();
 }
