@@ -17,7 +17,9 @@
 #include "red_black_tree.hpp"
 
 //#include "vector_test/insert.cpp"
-#include "vector_test/iterator.cpp"
+//#include "vector_test/iterator.cpp"
+//#include "map_test/iterator.cpp"
+#include "map_test/relational_ope.cpp"
 
 using std::cout;
 using std::endl;
@@ -2630,5 +2632,7 @@ int	main(int argc, char **argv)
 	//test_map();
 	
 	//vector_insert();
-	vector_iterator();
+	//vector_iterator();
+	//map_iterator();
+	map_relational_ope();
 }

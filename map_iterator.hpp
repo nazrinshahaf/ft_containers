@@ -198,7 +198,7 @@ namespace ft
 			}
 
 			reference	operator*(void) const { return (*this->_node->data); }
-			pointer		operator->(void) const { return (this->_node); }
+			pointer		operator->(void) const { return (this->_node->data); }
 
 			node_pointer	_node;
 

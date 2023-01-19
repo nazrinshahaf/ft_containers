@@ -9,7 +9,7 @@ class	RedBlackTree
 {
 	public:
 		typedef	T													value_type;
-		//typedef	Node<T>												node;
+		typedef	Node<T>												node;
 		//typedef	Node<T>												*node_ptr;
 		typedef	Compare												key_compare;
 		typedef	Alloc												allocator_type;
@@ -153,45 +153,6 @@ class	RedBlackTree
 		 * @param 'val' : the value to be inserted into the binary tree.
 		 * */
 
-		//void	insert_test(node_pointer to_insert)
-		//{
-		//	if (_root == _sentinal)
-		//	{
-		//		_root = to_insert;
-		//		_root->colour = RBT_BLACK;
-		//		_sentinal->parent = _root;
-		//		_size++;
-		//		_sentinal->right = _root;
-		//		_sentinal->left = _root;
-		//		return ;
-		//	}
-
-		//	//normal insert
-		//	node_pointer	front = _root;
-		//	node_pointer	back = _root;
-		//	while (front != _sentinal)
-		//	{
-		//		back = front;
-		//		if (_compare(*to_insert->data, *front->data))
-		//			front = front->left;
-		//		else
-		//			front = front->right;
-		//	}
-
-		//	//node_pointer	insert = create_node(val);
-		//	if (_compare(*to_insert->data, *back->data))
-		//		back->left = to_insert;
-		//	else
-		//		back->right = to_insert;
-		//	to_insert->parent = back;
-
-		//	_size++;
-		//	insert_fixup(to_insert);
-		//	_sentinal->parent = _sentinal;
-		//	_sentinal->left = min(_root);
-		//	_sentinal->right = max(_root);
-		//}
-
 		node_pointer	insert_node(const value_type &val)
 		{
 			//if tree has no elements
@@ -275,6 +236,8 @@ class	RedBlackTree
 		 * 	
 		 * 	** cannot modify the value of x in this scenario, it will attempt to
 		 * 	rebalance even though the tree is balanced.
+		 *
+		 * 	@param 'val' : the val to look for in the tree to delete.
 		 * */
 
 		void	delete_node(value_type val)
@@ -324,13 +287,25 @@ class	RedBlackTree
 		}
 
 		/*
-		 * find
+		 * find.
+		 * Searches the tree for the val passed in.
+		 * 
+		 * @note : just used to call the private
+		 * 	function search_tree
+		 *
+		 * @param 'val' : the val to look for in the tree.
 		 * */
 
 		node_pointer	find(const value_type &val) const
 		{
 			return (search_tree(_root, val));
 		}
+
+		/*
+		 * clear.
+		 *
+		 * Clears the tree but doesnt delete the root.
+		 * */
 
 		void	clear(void)
 		{
@@ -342,6 +317,43 @@ class	RedBlackTree
 			_sentinal->right = _sentinal;
 			_size = 0;
 			_root = _sentinal;
+		}
+
+		/*
+		 * swap.
+		 *
+		 * Swaps the contents of one tree with the other.
+		 * Also swaps the allocator and comparator.
+		 *
+		 * @note : needs to keep iterator validity after swapping.
+		 * @note : I shouldve probably made a ft::swap or something.
+		 *
+		 * @param 'to_swap' : the tree to swap its contents with.
+		 * */
+
+		void	swap(RedBlackTree &to_swap)
+		{
+			allocator_type	temp_val_alloc(to_swap._val_alloc);
+			node_allocator	temp_node_alloc(to_swap._node_alloc);
+			node_pointer	temp_sentinal(to_swap._sentinal);
+			node_pointer	temp_root(to_swap._root);
+			key_compare		temp_compare(to_swap._compare);
+			size_type		temp_size(to_swap._size);
+
+			to_swap._val_alloc = this->_val_alloc;
+			to_swap._node_alloc = this->_node_alloc;
+			to_swap._sentinal = this->_sentinal;
+			to_swap._root = this->_root;
+			to_swap._compare = this->_compare;
+			to_swap._size = this->_size;
+
+			this->_val_alloc = temp_val_alloc;
+			this->_node_alloc = temp_node_alloc;
+			this->_sentinal = temp_sentinal;
+			this->_root = temp_root;
+			this->_root = temp_root;
+			this->_compare = temp_compare;
+			this->_size = temp_size;
 		}
 
 		/*
@@ -500,7 +512,6 @@ class	RedBlackTree
 
 		/*
 		 * get_root.
-		 *
 		 * Returns root of tree.
 		 * */
 
@@ -511,6 +522,7 @@ class	RedBlackTree
 
 		/*
 		 * get_sentinal
+		 * Returns the sentinal of the tree.
 		 * */
 
 		node_pointer	get_sentinal(void) const
@@ -520,7 +532,6 @@ class	RedBlackTree
 
 		/*
 		 * size.
-		 *
 		 * Returns the size of the tree.
 		 * */
 
@@ -548,16 +559,6 @@ class	RedBlackTree
 		size_type	max_size(void) const
 		{
 			return (size_type(-1));
-		}
-
-		size_type	n_size(void) const
-		{
-			return (this->_node_alloc.max_size());
-		}
-
-		size_type	v_size(void) const
-		{
-			return (this->_val_alloc.max_size());
 		}
 
 		key_compare	key_comp(void)	const
@@ -647,8 +648,6 @@ class	RedBlackTree
 
 		/*
 		 * create_node.
-		 * free_node.
-		 * delete_tree.
 		 *
 		 * All 3 are helper functions to allocate and 
 		 * construct a node using allocator.
@@ -847,7 +846,6 @@ class	RedBlackTree
 
 		/*
 		 * left_rotate.
-		 * right_rotate.
 		 *
 		 * Rotation in binary tree means to 'rotate'
 		 * the contents of the tree without intefering
@@ -874,6 +872,23 @@ class	RedBlackTree
 			y->left = x;
 			x->parent = y;
 		}
+
+		/*
+		 * right_rotate.
+		 *
+		 * Rotation in binary tree means to 'rotate'
+		 * the contents of the tree without intefering
+		 * with the order.
+		 *
+		 * https://www.youtube.com/watch?v=dCF_d-zc_bQ
+		 *
+		 * to rorate on x means basically means make y
+		 * the new root and make x a subtree of y. All
+		 * of this is done without intefering with the
+		 * order of tree.
+		 *
+		 * @param 'x' : the node to perform a rotation on.
+		 * */
 
 		void	right_rotate(node_pointer x)
 		{
