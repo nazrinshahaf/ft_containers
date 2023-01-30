@@ -21,7 +21,8 @@
 //#include "vector_test/insert.cpp"
 //#include "vector_test/iterator.cpp"
 //#include "map_test/iterator.cpp"
-#include "map_test/relational_ope.cpp"
+//#include "map_test/relational_ope.cpp"
+#include "map_test/leaks.cpp"
 
 using std::cout;
 using std::endl;
@@ -2637,4 +2638,5 @@ int	main(int argc, char **argv)
 	//vector_iterator();
 	//map_iterator();
 	//map_relational_ope();
+	leaks();
 }
