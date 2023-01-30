@@ -16,6 +16,41 @@
 using std::cout;
 using std::endl;
 
+/*
+	template <class T, class Container = ft::vector<T> >
+	class stack
+	{
+		public:
+			typedef	T								value_type;
+			typedef Container						container_type;
+			typedef	size_t							size_type;
+
+		protected:
+			Container		_container;
+
+		explicit stack(const container_type &ctnr = container_type());
+		stack(const stack &other);
+		~stack();
+
+ 		value_type			&top(void);
+
+		const value_type	&top(void) const;
+
+		bool				empty(void) const;
+		size_type			size(void) const;
+
+		void				push(const value_type &value);
+		void				pop(void);
+
+		friend bool	operator==(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+		friend bool	operator!=(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+		friend bool	operator>(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+		friend bool	operator>=(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+		friend bool	operator<(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+		friend bool	operator<=(const stack<T,Container> &lhs, const stack<T,Container> &rhs);
+	};
+*/
+
 namespace ft
 {
 	template <class T, class Container = ft::vector<T> >
@@ -25,6 +60,11 @@ namespace ft
 			typedef	T								value_type;
 			typedef Container						container_type;
 			typedef	size_t							size_type;
+
+		protected:
+			Container								_container;
+
+		public:
 
 		/*
 		 * default constructor.
@@ -48,7 +88,6 @@ namespace ft
 
 		/*
 		 * copy constructor
-		 *
 		 * Constructs a copy of stack 'other'.
 		 *
 		 * @param 'other' : the stack to be copied.
@@ -64,7 +103,6 @@ namespace ft
 
 		/*
 		 * desturctor.
-		 *
 		 * Destryos all elements in the stack.
 		 *
 		 * Calles the underlying containers destructor.
@@ -176,51 +214,7 @@ namespace ft
 		{
 			return (lhs._container >= rhs._container);
 		}
-
-		protected:
-			Container		_container;
-
-		private:
-			const static int	_print_msg = 1;
 	};
 }
-
-/*
-	template <class T, class Container = ft::vector<T> >
-	class stack
-	{
-		public:
-			typedef	T								value_type;
-			typedef Container						container_type;
-			typedef	size_t							size_type;
-
-		explicit stack(const container_type &ctnr = container_type());
-		stack(const stack &other);
-		~stack();
-
- 		value_type			&top(void);
-
-		const value_type	&top(void) const;
-
-		bool		empty(void) const;
-		size_type	size(void) const;
-
-		void	push(const value_type &value);
-		void	pop(void);
-
-		operator==
-		operator!=
-		operator>
-		operator>=
-		operator<
-		operator<=
-
-		protected:
-			Container		_container;
-
-		private:
-			const static int	_print_msg = 1;
-	};
-*/
 
 #endif
