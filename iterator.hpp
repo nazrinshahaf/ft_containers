@@ -107,6 +107,9 @@ namespace ft
 	 * c++11. By doing this we can intead pass in enable_if to
 	 * funciton variables instead of the template variables. And we cant set
 	 * the default value to be pointing to nullptr.
+	 *
+	 * https://stackoverflow.com/questions/61557539/how-can-i-use-my-custom-enable-if-in-c98
+	 * https://eli.thegreenplace.net/2014/sfinae-and-enable_if/
 	 * */
 
 	template <bool B, class T = void>
