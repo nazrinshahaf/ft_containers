@@ -10,13 +10,12 @@ class	RedBlackTree
 	public:
 		typedef	T													value_type;
 		typedef	Node<T>												node;
-		//typedef	Node<T>												*node_ptr;
 		typedef	Compare												key_compare;
 		typedef	Alloc												allocator_type;
 		typedef	typename Alloc::template rebind<Node<T> >::other	node_allocator;
 		typedef	typename node_allocator::pointer					node_pointer;
 		typedef typename allocator_type::pointer					pointer;
-		//typedef typename allocator_type::const_pointer				const_pointer;
+		//typedef typename allocator_type::const_pointer				const_pointer; //never used (i prob do need to implement some const equiv funcs)
 		typedef ft::map_iterator<value_type>						iterator;
 		typedef ft::map_iterator<const value_type>					const_iterator;
 		typedef ft::reverse_iterator<iterator>						reverse_iterator;
