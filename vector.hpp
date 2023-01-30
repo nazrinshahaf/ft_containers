@@ -15,6 +15,96 @@
 using std::cout;
 using std::endl;
 
+/*
+	template <class T, class Alloc = std::allocator<T> >
+	class	vector
+	{
+		typedef T															value_type;
+		typedef Alloc														allocator_type;
+		typedef typename Alloc::reference									reference;
+		typedef typename Alloc::const_reference								const_reference;
+		typedef typename Alloc::pointer										pointer;
+		typedef typename Alloc::const_pointer								const_pointer;
+		typedef ft::vector_iterator<T>										iterator;
+		typedef ft::vector_iterator<const T>								const_iterator;
+		typedef	ft::reverse_iterator<iterator>								reverse_iterator;
+		typedef	ft::reverse_iterator<const iterator>						const_reverse_iterator;
+		typedef	typename iterator_traits<iterator>::difference_type			difference_type;
+		typedef typename Alloc::size_type									size_type;
+
+
+		explicit vector(const allocator_type &alloc = allocator_type());
+		explicit vector(size_type n, const value_type &val = value_type(),
+							const allocator_type &alloc = allocator_type())
+
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last,
+				const allocator_type &alloc = allocator_type());
+
+		vector(const vector &other);
+		~vector();
+
+		
+		vector& operator=(const vector &other);
+		iterator			begin(void);
+		iterator			end(void);
+
+		void		assign(size_type n, const value_type &val);
+
+		template <class InputIterator>
+		void		assign(InputIterator first, InputIterator last);
+		void		push_back(const value_type &value);
+		void		pop_back(void);
+		iterator	insert(iterator position, const value_type& val);
+		void 		insert(iterator position, size_type n,
+						const value_type& val);
+
+		template <class InputIterator>
+		void		insert(iterator position, InputIterator first, 
+						InputIterator last);
+
+		iterator	erase(iterator position);
+		iterator	erase(iterator first, iterator last);
+		void		swap(vector &other);
+		void		clear(void);
+
+
+		size_type	size(void) const;
+		size_type	max_size(void) const;
+		void		resize(size_type n, value_type val = value_type());
+		size_type	capacity(void) const;
+		bool		empty(void) const;
+		void		reserve(size_type n);
+		reference	operator[](size_type n);
+
+
+		const_reference		operator[](size_type n) const;
+		reference			at(size_type pos);
+		const_reference		at(size_type pos) const;
+		reference			front(void);
+		const_reference		front(void) const;
+		reference			back(void);
+		const_reference		back(void) const;
+
+
+		allocator_type		get_allocator(void) const;
+
+		private:
+			allocator_type	_alloc;
+			pointer			_start;
+			pointer			_end;
+			pointer			_capacity;
+	}
+
+	bool operator==(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator!=(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator<(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator<=(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator>(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator>=(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+	bool operator>=(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs);
+
+*/
 namespace ft
 {
 	template <class T, class Alloc = std::allocator<T> >
@@ -35,6 +125,16 @@ namespace ft
 			typedef	ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 			typedef	typename iterator_traits<iterator>::difference_type			difference_type;
 			typedef typename Alloc::size_type									size_type;
+
+
+		private:
+
+			allocator_type		_alloc;
+			pointer				_start;
+			pointer				_end;
+			pointer				_capacity;
+
+		public:
 
 			/*
 			 * defualt constructor.
@@ -148,11 +248,6 @@ namespace ft
 #ifdef	PRINT_MSG
 				cout << GREEN "Vector Range Constructor called" RESET << endl;
 #endif
-				//need a check to see wheather it is a valid iterator
-
-				//replace with ft::distance when implemented
-				//size_type	len = 0;
-				//for (InputIterator i = first; i != last; len++, i++) ;
 				size_type	len = ft::distance(first, last);
 
 				this->_start = this->_alloc.allocate(len);
@@ -187,6 +282,10 @@ namespace ft
 			 * destructor.
 			 * Destroys all elements up to size.
 			 * Deallocates all storage up to capacity.
+			 *
+			 * @note : I dont have to handle anything after
+			 * 	destructor is called, so link can be ignored
+			 * 	just left it for info
 			 *
 			 * https://stackoverflow.com/questions/9584660/does-the-default-allocator-zeroize-int
 			 * Just pasting this here as idk how to completely tell the program that
@@ -255,7 +354,6 @@ namespace ft
 			const_reverse_iterator	rbegin(void) const
 			{
 				return (const_reverse_iterator(this->end()));
-				//return (ft::reverse_iterator<ft::vector_iterator<const T> >(this->end()));
 			}
 
 			/*
@@ -323,7 +421,8 @@ namespace ft
 			 * first and last. 
 			 * The capacity and size = last - first.
 			 *
-			 * Something wrong with requires pointer indirection when other assign is called.
+			 * @note : Something wrong with requires pointer 
+			 * indirection when other assign is called.
 			 * But works on its own
 			 *
 			 * @edit : need to implement enable if to fix this issue.
@@ -337,9 +436,6 @@ namespace ft
 					typename ft::enable_if<!ft::is_integral<InputIterator>::value,
 					InputIterator>::type* = nullptr)
 			{
-				//replace with ft::distance after properly implemented
-				//size_type	len = 0;
-				//for (InputIterator i = first; i != last; len++, i++) ;
 				size_type	len = ft::distance(first, last);
 
 				this->clear();
@@ -349,6 +445,7 @@ namespace ft
 			}
 
 			/*
+			 * push_back.
 			 * Adds an element to the end of the vector.
 			 *
 			 * If the vector size is 0. capacity and size will change to 1.
@@ -359,7 +456,6 @@ namespace ft
 
 			void		push_back(const value_type &value)
 			{
-				//have to check if full then have to reallocate respectively
 				if (this->_end == this->_capacity)
 				{
 					size_type	new_capacity = 
@@ -370,7 +466,9 @@ namespace ft
 			}
 
 			/*
+			 * pop_back.
 			 * Removes the last element from the vector.
+			 *
 			 * If the container is not empty, the function never throws exceptions 
 			 * (no-throw guarantee). Otherwise, it causes undefined behavior.
 			 * */
@@ -412,9 +510,6 @@ namespace ft
 					return (this->end() - 1);
 				}
 
-				//replace with ft::distance when implemented
-				//size_type	temp_distance = 0;
-				//for (iterator i = this->begin(); i != position; i++, temp_distance++);
 				size_type	temp_distance = ft::distance(this->begin(), position);
 
 				if (this->_end == this->_capacity)
@@ -466,6 +561,8 @@ namespace ft
 			 * 	it rounds of to the nearest nth power. Im going to just
 			 * 	going to use capacity = size + n. This rounding only happens
 			 * 	with 15 and 16 size. Havent found any other time.
+			 * @edit : Just did the math wrong just ask YZ i think he told me
+			 * 	the pattern.
 			 *
 			 * @param 'position' : the position of the element to insert
 			 * 	'val' to. Everything after will be shifted to the right.
@@ -488,22 +585,10 @@ namespace ft
 					return ;
 				}
 
-				//replace with ft::distance when implemented
-				//size_type	temp_distance = 0;
-				//for (iterator i = this->begin(); i != position; i++, temp_distance++);
 				size_type	temp_distance = ft::distance(this->begin(), position);
-				//cout << temp_distance << endl;
 
 				if (this->size() + n > this->capacity())
 					this->reserve(this->size() + n);
-
-				//if (this->_end + n >= this->_capacity)
-				//{
-				//	size_type	new_capacity = 
-				//		(this->_capacity == 0) ? 1 : (this->_capacity - this->_start) * 2;
-				//	this->reserve(new_capacity);
-				//	cout << "new capacity : " << this->capacity() << endl;
-				//}
 
 				pointer		take_end = this->_end - 1;
 				pointer		place_end = this->_end - 1 + n;
@@ -511,9 +596,6 @@ namespace ft
 				
 				for (int i = ((int)this->size() - temp_distance); i ; i--)
 				{
-					//for (int i = 0; i < (int)this->capacity(); i++)
-					//	cout << "vec 1 : " << (*this)[i] << endl;
-					//cout << endl;
 					this->_alloc.construct(place_end, *take_end);
 					place_end--;
 					take_end--;
@@ -561,95 +643,32 @@ namespace ft
 				}
 
 				size_type	ptr_offset = ft::distance(iterator(this->begin()), position);
-
 				size_type	range_len = ft::distance(first, last);
+
 				if (this->size() + range_len > this->capacity())
 					this->reserve(this->size() + range_len);
-
-				//cout << endl;
-				//cout << "new_capacity : " << this->capacity() << endl;
-
-				//for (int i = 0; i < (int)this->capacity(); i++)
-				//	cout << "in : " << (*this)[i] << endl;
-				//cout << endl;
 
 				pointer	place_end = this->_end + range_len - 1;
 				pointer	take_end = this->_end - 1;
 				pointer	pos_ptr = this->_start + ptr_offset;
 
-				//int t = 0;
-
-				//cout << "range_len : " << range_len << endl;
-				//cout << "place_end : " << *place_end << endl;
-				//cout << "take_end: " << *take_end << endl;
-				//cout << "pos_ptr : " << *pos_ptr << endl;
-				//for (int i = 0; i < (int)this->capacity(); i++)
-				//	cout << t << " out : " << (*this)[i] << endl;
-				//cout << endl;
-
 				while (take_end != pos_ptr - 1 && take_end >= this->_start)
 				{
-					//for (int i = 0; i < (int)this->capacity(); i++)
-					//	cout << " in : " << (*this)[i] << endl;
-					//cout << endl;
 					if (place_end < this->_end)
-					{
-						//cout << "deleted : " << *place_end << endl;
 						this->_alloc.destroy(place_end);
-						//cout << "added: " << *take_end << endl;
-					}
 					this->_alloc.construct(place_end, *take_end);
 					take_end--;
 					place_end--;
-					//t++;
 				}
 
-				//cout << "passed" << endl;
-
-				//for (int i = 0; i < (int)this->capacity(); i++)
-				//{
-				//	cout << " out: " << (*this)[i] << endl;
-				//	//cout << " out: " << &(*this)[i] << endl;
-				//}
-
-				//cout << endl;
-				//for (InputIterator t = first; t != last; t++)
-				//	cout << " test : " << *t<< endl;
-				//cout << endl;
-
-				//for (InputIterator t = last - 1; t != first; t--)
-				//	cout << " test : " << *t << endl;
-				//cout << endl;
-
-				//cout << "first : " << *first << endl;
-				//cout << "first : " << &first << endl;
-				//--first;
-				//cout << "first : " << *first << endl;
-				//cout << "first : " << &first << endl;
 				InputIterator	temp = --last;
-				//cout << " out to add: " << *temp << endl;
+
 				for (size_type i = range_len; i > 0; i--, place_end--, temp--)
 				{
-					//cout << " to add: " << *temp << endl;
-					//for (int i = 0; i < (int)this->capacity(); i++)
-					//	cout << " in: " << (*this)[i] << endl;
-					//cout << endl;
-					//cout << "i : " << i  - 1<< endl;
-					//cout << "num to reaplace : " << *(first + i - 1) << endl;
 					if (place_end < this->_end)
-					{
-						//cout << "deleted : " << *place_end << endl;
 						this->_alloc.destroy(place_end);
-						//cout << "added: " << *(first + i -1) << endl;
-					}
-					//cout << " added: " << *(temp) << endl;
 					this->_alloc.construct(place_end, *(temp));
-					//t++;
 				}
-				//for (int i = 0; i < (int)this->capacity(); i++)
-				//	cout << " out: " << (*this)[i] << endl;
-				//cout << endl;
-
 				this->_end += range_len;
 			}
 
@@ -679,55 +698,22 @@ namespace ft
 				}
 
 				size_type	dis	= ft::distance(iterator(this->begin()), position);
-				//cout << "dis : " << dis << endl;
-
-				//pointer	place_end = this->_end - 2;
 				pointer		take_end = this->_end - 1;
 				value_type	take_val = *take_end;
 
-				//cout << "place_end : " << *place_end << endl;
-				//cout << "take_end : " << *take_end << endl;
-				//cout << "take_val : " << take_val << endl;
-
-				//cout << "destroyed : " << *take_end << endl;
 				this->_alloc.destroy(take_end);
 				take_end--;
-				//while (iterator(take_end) != position)
-				//for (int i = 0; i < (int)this->capacity(); i++)
-				//	cout << "in : " << &(*this)[i] << endl;
-				//cout << endl;
 				for (size_type j = this->size(); j > dis; j--)
 				{
-					//for (int i = 0; i < (int)this->capacity(); i++)
-					//	cout << "in : " << (*this)[i] << endl;
-					//cout << endl;
-
 					value_type	place_val = *take_end;
-					//cout << "place_end : " << *place_end << endl;
-					//cout << "take_end : " << *take_end << endl;
-					//cout << "place_val : " << place_val << endl;
-					//cout << "take_val : " << take_val << endl;
-
-					//cout << "destroyed : " << *take_end << endl;
-					//cout << "added : " << take_val << endl;
 					this->_alloc.destroy(take_end);
 					this->_alloc.construct(take_end, take_val);
-					//cout << "exit 1 : " << take_end << endl;
-					//cout << "exit 1 : " << (this->_start + dis) << endl;
 					if (take_end == (this->_start + dis))
-					{
-						//cout << "broke" << endl;
 						break;
-					}
 					take_val = place_val;
 					take_end--;
 				}
-				//this->_alloc.destroy(place_end);
-				//this->_alloc.construct(place_end, take_val);
-
 				this->_end--;
-				//for (size_type i = 0; i != this->size(); i++)
-				//	cout << (*this)[i] << endl;
 				return (iterator(this->_start + dis));
 			}
 
@@ -778,45 +764,26 @@ namespace ft
 
 				size_type	dis = ft::distance(first, last);
 				size_type	first_dis = ft::distance(this->begin(), first);
-				//cout << "dis: " << dis << endl;
-				//cout << endl;
-
 				pointer	take_pos = this->_start + ft::distance(this->begin(), first);
 				pointer	place_pos = take_pos + dis;
 
-				//cout << "take_pos : " << *take_pos << endl;
-				//cout << "place_pos : " << *place_pos << endl;
-				//cout << endl;
-
 				for (size_type i = this->size() - dis; place_pos != this->_end; i--, take_pos++, place_pos++)
 				{
-					//cout << "i: " << i << endl;
-					//cout << "destroyed : " << *take_pos << endl;
-					//cout << "added : " << *place_pos << endl;
 					this->_alloc.destroy(take_pos);
-					//*take_pos = 0;
 					this->_alloc.construct(take_pos, *place_pos);
 				}
-				//cout << endl;
-
-				//cout << "take_pos : " << *take_pos << endl;
-				//cout << endl;
 
 				for (size_type i = dis; i; i--, take_pos++)
 				{
-					//*take_pos = 0;
 					this->_alloc.destroy(take_pos);
 				}
-
-				//for (size_type i = 0; i < this->capacity(); i++)
-				//	cout << "final in : " << (*this)[i] << endl;
-				//cout << endl;
 
 				this->_end -= dis;
 				return (iterator(this->_start + first_dis));
 			}
 
 			/*
+			 * swap.
 			 * Swaps this vector with 'other' vector
 			 *
 			 * @param 'other' : the other vector to swap with.
@@ -838,9 +805,10 @@ namespace ft
 			}
 
 			/*
+			 * clear.
 			 * Clears the content of the vector.
-			 * It destroys everything in the vector with
-			 * alloc.destroy.
+			 *
+			 * It calles the destructor of all the elements in the vector.
 			 * Size is set to 0.
 			 * Capacity is untouched.
 			 * */
@@ -851,12 +819,10 @@ namespace ft
 					this->_alloc.destroy(this->_end);
 			}
 
-			//emplace //c++11
-			//emplace_back //c++11
-
 			/* Capacity */
 
 			/*
+			 * size.
 			 * Returns the size of the vector.
 			 *
 			 * Size in vector means the amount of elements
@@ -872,6 +838,7 @@ namespace ft
 			}
 
 			/*
+			 * max_size.
 			 * Returns the max size of the vector.
 			 *
 			 * Max size = max possible amount that the
@@ -884,6 +851,7 @@ namespace ft
 			}
 
 			/*
+			 * resize.
 			 * Resizes the vecctor to the amount 'n' with
 			 * 'val' as the content.
 			 *
@@ -933,6 +901,7 @@ namespace ft
 			}
 
 			/*
+			 * capacity.
 			 * Returns the capacity of the vector.
 			 *
 			 * The capacity is the amount of space that has been
@@ -940,8 +909,8 @@ namespace ft
 			 * Size does not have to equal capacity.
 			 * If capacity is > size that means there is extra
 			 * space in the vector that can be filled later on.
-			 * This is done to split up allocation and construction
-			 * of memory.
+			 * This is done to optimize the amount of times a vector
+			 * has to allocate memory.
 			 *
 			 * ex : {0,1,2,3,4,5, [], [], []} 6/9
 			 * 	size = 6, capacity = 9
@@ -953,6 +922,7 @@ namespace ft
 			}
 
 			/*
+			 * empty.
 			 * Returns a true or false depending on wheather or
 			 * not the vector is empty.
 			 *
@@ -967,6 +937,7 @@ namespace ft
 			}
 
 			/*
+			 * reserve.
 			 * Changes the capacity of the vector given by 'n'.
 			 *
 			 * Reserving a vector will invalidate iterators previously
@@ -1002,8 +973,6 @@ namespace ft
 				}
 			}
 
-			//void		shrink_to_fit(void); //c++11 feature
-
 			/* Element access */
 
 			/*
@@ -1037,6 +1006,7 @@ namespace ft
 			}
 
 			/*
+			 * at.
 			 * Returns a reference to the element pointed at 
 			 * by vector at position pos.
 			 *
@@ -1055,6 +1025,7 @@ namespace ft
 			}
 
 			/*
+			 * at.
 			 * Returns a reference to the element pointed at 
 			 * by vector at position pos.
 			 *
@@ -1073,6 +1044,7 @@ namespace ft
 			}
 
 			/*
+			 * front.
 			 * Returns a reference to the
 			 * element at the start of the vector.
 			 * */
@@ -1083,6 +1055,7 @@ namespace ft
 			}
 
 			/*
+			 * front.
 			 * Returns a const reference to the 
 			 * element at the start of the vector.
 			 * */
@@ -1110,12 +1083,10 @@ namespace ft
 				return (*(this->_end - 1));
 			}
 
-			//value_type*			data(void) noexcept; //c++11 feature
-			//const value_type*	data(void) const noexcept; //c++11 feature
-
 			/* Allocator */
 
 			/*
+			 * get_allocator.
 			 * Returns the underlying allocater being used to allocate
 			 * memory.
 			 * */
@@ -1124,13 +1095,6 @@ namespace ft
 			{
 				return (this->_alloc);
 			}
-
-
-		private:
-			allocator_type		_alloc;
-			pointer				_start;
-			pointer				_end;
-			pointer				_capacity;
 	};
 
 	template <class T, class Alloc>
@@ -1182,97 +1146,5 @@ namespace ft
 		return (rhs <= lhs);
 	}
 }
-
-/*
-	template <class T, class Alloc = std::allocator<T> >
-	class	vector
-	{
-		typedef T															value_type;
-		typedef Alloc														allocator_type;
-		typedef typename Alloc::reference									reference;
-		typedef typename Alloc::const_reference								const_reference;
-		typedef typename Alloc::pointer										pointer;
-		typedef typename Alloc::const_pointer								const_pointer;
-		typedef ft::vector_iterator<T>										iterator;
-		typedef ft::vector_iterator<const T>								const_iterator;
-		typedef	ft::reverse_iterator<iterator>								reverse_iterator;
-		typedef	ft::reverse_iterator<const iterator>						const_reverse_iterator;
-		typedef	typename iterator_traits<iterator>::difference_type			difference_type;
-		typedef typename Alloc::size_type									size_type;
-
-
-		explicit vector(const allocator_type &alloc = allocator_type());
-		explicit vector(size_type n, const value_type &val = value_type(),
-							const allocator_type &alloc = allocator_type())
-
-		template <class InputIterator>
-		vector(InputIterator first, InputIterator last,
-				const allocator_type &alloc = allocator_type());
-
-		vector(const vector &other);
-		~vector();
-
-		
-		vector& operator=(const vector &other);
-		iterator			begin(void);
-		iterator			end(void);
-
-
-		void		assign(size_type n, const value_type &val);
-
-		template <class InputIterator>
-		void		assign(InputIterator first, InputIterator last);
-		void		push_back(const value_type &value);
-		void		pop_back(void);
-		iterator	insert(iterator position, const value_type& val);
-		void 		insert(iterator position, size_type n,
-						const value_type& val);
-
-		template <class InputIterator>
-		void		insert(iterator position, InputIterator first, 
-						InputIterator last);
-
-		iterator	erase(iterator position);
-		iterator	erase(iterator first, iterator last);
-		void		swap(vector &other);
-		void		clear(void);
-
-
-		size_type	size(void) const;
-		size_type	max_size(void) const;
-		void		resize(size_type n, value_type val = value_type());
-		size_type	capacity(void) const;
-		bool		empty(void) const;
-		void		reserve(size_type n);
-		reference	operator[](size_type n);
-
-
-		const_reference		operator[](size_type n) const;
-		reference			at(size_type pos);
-		const_reference		at(size_type pos) const;
-		reference			front(void);
-		const_reference		front(void) const;
-		reference			back(void);
-		const_reference		back(void) const;
-
-
-		allocator_type		get_allocator(void) const;
-
-
-		private:
-			allocator_type	_alloc;
-			pointer			_start;
-			pointer			_end;
-			pointer			_capacity;
-	}
-
-	operator==
-	operator!=
-	operator<
-	operator<=
-	operator>
-	operator>=
-
-*/
 
 #endif
