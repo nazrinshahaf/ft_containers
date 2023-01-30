@@ -44,8 +44,9 @@ using std::endl;
 		vector(const vector &other);
 		~vector();
 
-		
 		vector& operator=(const vector &other);
+
+
 		iterator			begin(void);
 		iterator			end(void);
 

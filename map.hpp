@@ -16,6 +16,116 @@
 using std::cout;
 using std::endl;
 
+/*
+	template <class Key, class T,
+		 class Compare = std::less<Key>,
+		 class Allocator = std::allocator<ft::pair<const Key, T> > >
+	class map
+	{
+		public:
+		typedef	Key														key_type;
+		typedef	T														mapped_type;
+		typedef ft::pair<const Key, T>									value_type;
+		typedef	std::size_t												size_type;
+		typedef	std::ptrdiff_t											difference_type;
+		typedef	Compare													key_compare;
+		typedef	Allocator												allocator_type;
+		typedef	value_type&												reference;
+		typedef	const value_type&										const_reference;
+		typedef	typename Allocator::pointer								pointer;
+		typedef	typename Allocator::const_pointer						const_pointer;
+		typedef RedBlackTree<value_type, value_compare, allocator_type>	tree_type;
+		typedef	typename tree_type::iterator							iterator;
+		typedef	typename tree_type::const_iterator						const_iterator;
+		typedef	ft::reverse_iterator<iterator>							reverse_iterator;
+		typedef	ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+
+		private:
+		allocator_type	_alloc;
+		tree_type		_rbt;
+		key_compare		_compare;
+
+		class value_compare : std::binary_function<T, T, bool>;
+
+		public:
+		explicit map(const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type());
+
+		template <class InputIterator>
+		map(InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type());
+
+		map(const map& other);
+		~map();
+
+		map	&operator=(const map& other);
+
+
+		iterator				begin(void);
+		const_iterator			begin(void);
+		reverse_iterator		rbegin(void);
+		const_reverse_iterator	rbegin(void);
+		iterator				end(void);
+		const_iterator			end(void);
+		reverse_iterator		rend(void);
+		const_reverse_iterator	rend(void);
+
+
+		bool		empty(void);
+		size_type	size(void);
+		size_type	max_size(void);
+
+
+		mapped_type			&operator[](const key_type& k);
+		mapped_type			&at(const key_type& k);
+		const mapped_type	&at(const key_type& k);
+
+
+		pair<iterator, bool> 	insert(const value_type& val);
+		iterator 				insert(iterator position, const value_type& val);
+
+		template <class InputIterator>
+		void					insert(InputIterator first, InputIterator last);
+		void					erase(iterator position);
+		size_type				erase(const key_type &key);
+		void					erase(iterator first, iterator last);
+		void					swap(map &to_swap);
+		void					clear(void);
+
+
+		key_compare				key_comp(void);
+		value_compare			value_comp(void);
+
+
+		iterator								find(const key_type& key);
+		const_iterator							find(const key_type& key);
+		size_type								count(const key_type& key);
+		iterator								lower_bound(const key_type& key);
+		const_iterator							lower_bound(const key_type& key);
+		iterator								upper_bound(const key_type &key);
+		const_iterator							upper_bound(const key_type &key);
+		pair<iterator, iterator> 				equal_range(const key_type &key);
+		pair<const_iterator, const_iterator> 	equal_range(const key_type &key);
+
+
+		allocator_type	get_allocator(void);
+	};
+
+	bool operator==(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+	bool operator!=(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+	bool operator<(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+	bool operator<=(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+	bool operator>(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+	bool operator>=(const ft::map<Key, T, Compare, Alloc> &lhs,
+		const ft::map<Key, T, Compare, Alloc> &rhs)
+*/
+
 namespace ft
 {
 	template <class Key, class T,
@@ -101,23 +211,6 @@ namespace ft
 			}
 
 			/*
-			 * copy constructor.
-			 * Copies the values of one map to another.
-			 * 
-			 * @param 'other' : the other map to copy the values of.
-			 * */
-
-			map(const map& other) :
-				_alloc(other._alloc),
-				_rbt(other._rbt),
-				_compare(other._compare)
-			{
-#ifdef PRINT_MSG
-				cout << GREEN "Map Copy Constructor called" RESET << endl;
-#endif
-			}
-
-			/*
 			 * range constructor.
 			 * Constructs a map given a range of iterators.
 			 *
@@ -165,17 +258,52 @@ namespace ft
 			}
 
 			/*
+			 * copy constructor.
+			 * Copies the values of one map to another.
+			 * 
+			 * @param 'other' : the other map to copy the values of.
+			 * */
+
+			map(const map& other) :
+				_alloc(other._alloc),
+				_rbt(other._rbt),
+				_compare(other._compare)
+			{
+#ifdef PRINT_MSG
+				cout << GREEN "Map Copy Constructor called" RESET << endl;
+#endif
+			}
+
+			/*
 			 * destructor.
 			 * Destroys all contents held in the map.
 			 * 
 			 * Doesnt really do anything as it is handled by the underlying
 			 * RedBlackTree.
 			 * */
+
 			~map()
 			{
 #ifdef PRINT_MSG
 				cout << RED "Map Destructor called" RESET << endl;
 #endif
+			}
+
+			/*
+			 * copy assignment operator.
+			 * Copies value of 'other' map into current map.
+			 *
+			 * @param 'other' : the map to be copied
+			 * */
+
+			map	&operator=(const map& other)
+			{
+#ifdef PRINT_MSG
+				cout << GREEN "Map Copy Assignment Operator called" RESET << endl;
+#endif
+				this->clear();
+				this->insert(other.begin(), other.end());
+				return (*this);
 			}
 
 			/* Iterators */
@@ -264,7 +392,6 @@ namespace ft
 
 			/*
 			 * empty.
-			 *
 		 	 * Returns a true or false depending on wheather or
 		 	 * not the map is empty.
 			 * */
@@ -276,7 +403,6 @@ namespace ft
 
 			/*
 			 * size.
-			 *
 			 * Returns the size of the map.
 			 * The number of key-value pairs in the map.
 			 * */
@@ -288,8 +414,8 @@ namespace ft
 
 			/*
 			 * max_size.
-			 *
 			 * Returns the max_size of a map.
+			 *
 			 * I have no idea.
 			 * This has no overhead at all. (;
 			 * I assume the gcc has overhead and probably different variable count so wtv.
@@ -344,6 +470,14 @@ namespace ft
 				return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
 			}
 
+			/* at.
+			 * Returns the const value held by the key if key exists in map.
+			 *
+			 * @note : Returns the same thing as operator but throws error if of out bounds.
+			 *
+			 * @param 'k' : the key to look for in the map.
+			 * */
+
 			const mapped_type	&at(const key_type& k) const
 			{
 				if (_rbt.find(ft::make_pair(k,mapped_type())) == _rbt.get_sentinal())
@@ -355,9 +489,10 @@ namespace ft
 
 			/*
 			 * insert.
-			 *
 			 * single element insert.
-			 * It needs to check if the pair already exists in the tree.
+			 * Inserts a pair into the map.
+			 *
+			 * @note : It needs to check if the pair already exists in the tree.
 			 *
 			 * If it does exists it returns a key-value pair of the already
 			 * existing key value pair.
@@ -389,9 +524,7 @@ namespace ft
 
 			/*
 			 * insert.
-			 *
 			 * hint insert.
-			 *
 			 * Gives a hint to the preceding node of the value to be inserted.
 			 * This doesn't necessarily mean that the value will be inserted there.
 			 * 
@@ -431,9 +564,7 @@ namespace ft
 
 			/*
 			 * insert.
-			 *
 			 * range insert.
-			 *
 			 * Inserts values pointed at by the iterators between first and last.
 			 *
 			 * @param 'first' : the starting of the range of values to fill
@@ -467,7 +598,6 @@ namespace ft
 
 			/*
 			 * erase.
-			 *
 			 * single iterator erase.
 			 * Erases a key-value pair based on iterator position.
 			 *
@@ -482,7 +612,6 @@ namespace ft
 
 			/*
 			 * erase.
-			 *
 			 * single key erase.
 			 * Erases a key-value pair based on the key.
 			 *
@@ -504,7 +633,6 @@ namespace ft
 
 			/*
 			 * erase.
-			 *
 			 * range iterator erase.
 			 * Erases all key-value pairs pointed at between first and last.
 			 * Exclusive of last.
@@ -523,7 +651,6 @@ namespace ft
 
 			/*
 			 * swap.
-			 *
 			 * Swaps the contents of one tree with the other.
 			 * Also swaps the allocator and comparator.
 			 *
@@ -577,7 +704,6 @@ namespace ft
 
 			/*
 			 * find.
-			 *
 			 * Returns an iterator to the key if exists.
 			 * Returns an iterator to nill if doesn't.
 			 *
@@ -588,6 +714,14 @@ namespace ft
 			{
 				return (iterator(_rbt.find(ft::make_pair(key, mapped_type()))));
 			}
+
+			/*
+			 * find.
+			 * Returns an const_iterator to the key if exists.
+			 * Returns an const_iterator to nill if doesn't.
+			 *
+			 * @param 'key' : the key to search for in the map.
+			 * */
 
 			const_iterator	find(const key_type& key) const
 			{
@@ -633,6 +767,18 @@ namespace ft
 				return (find(key));
 			}
 
+			/*
+			 * lower_bound.
+			 * Returns a const_iterator pointing to the first element
+			 * in the container whose key is not considered to go before k.
+			 *
+			 * Returns iterator to key if key exists in map.
+			 * If not returns highest most element found,
+			 * or sentinal.
+			 *
+			 * @param 'key' : the key to search for in the map.
+			 * */
+
 			const_iterator	lower_bound(const key_type& key) const
 			{
 				for (const_iterator it = begin(); it != end(); it++)
@@ -645,7 +791,6 @@ namespace ft
 
 			/*
 			 * upper_bound.
-			 *
 			 * Returns an iterator pointing to the first
 			 * element in the container whose key is considered to go after k.
 			 * 
@@ -664,6 +809,16 @@ namespace ft
 				return (end());
 			}
 
+			/*
+			 * upper_bound.
+			 * Returns an const_iterator pointing to the first
+			 * element in the container whose key is considered to go after k.
+			 * 
+			 * Returns an iterator to the first key-value pair found after key
+			 * is found.
+			 * @param 'key' : the key to search for in the map.
+			 * */
+
 			const_iterator	upper_bound(const key_type &key) const
 			{
 				for (const_iterator it = begin(); it != end(); it++)
@@ -675,8 +830,33 @@ namespace ft
 			}
 
 			/*
-			 * upper_bound.
+			 * equal_range.
+			 * Returns the bounds of a range that includes all the elements in 
+			 * the container which have a key equivalent to key.
 			 *
+			 * Because the elements in a map container have unique keys,
+			 * the range returned will contain a single element at most.
+			 *
+			 * If no matches are found, the range returned has a length of zero, with both 
+			 * iterators pointing to the first element that has a key considered
+			 * to go after k according to the container's key_comp.
+			 *
+			 * Two keys are considered equivalent if the container's
+			 * comparison object returns false reflexively
+			 *
+			 * definition taken from https://cplusplus.com/reference/map/map/equal_range/
+			 *
+			 * @param 'key' : the key to search for the bounds with all 
+			 * 	elements which include key.
+			 * */
+
+			pair<iterator, iterator> equal_range(const key_type &key)
+			{
+				return (ft::make_pair(lower_bound(key), upper_bound(key)));
+			}
+
+			/*
+			 * equal_range.
 			 * Returns the bounds of a range that includes all the elements in 
 			 * the container which have a key equivalent to key.
 			 *
@@ -698,27 +878,12 @@ namespace ft
 
 			pair<const_iterator, const_iterator> equal_range(const key_type &key) const
 			{
-				//typename tree_type::node_pointer	to_find = _rbt.find(ft::make_pair(key, mapped_type()));
-
-				//if (to_find == _rbt.get_sentinal())
 				return (ft::make_pair(lower_bound(key), upper_bound(key)));
-				//else
-				//	return (ft::make_pair(find(key), find(key)));
-			}
-
-			pair<iterator, iterator> equal_range(const key_type &key)
-			{
-				//typename tree_type::node_pointer	to_find = _rbt.find(ft::make_pair(key, mapped_type()));
-
-				//if (to_find == _rbt.get_sentinal())
-				return (ft::make_pair(lower_bound(key), upper_bound(key)));
-				//else
-				//	return (ft::make_pair(find(key), find(key)));
 			}
 
 			/* Allocator */
 
-			allocator_type	get_allocator() const
+			allocator_type	get_allocator(void) const
 			{
 				return (_alloc);
 			}
