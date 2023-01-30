@@ -187,11 +187,6 @@ namespace ft
 
 		for (; first != last; distance++, first++) ;
 		return (distance);
-		//if (first < last)
-		//	for (; first != last; distance++, first++) ;
-		//else
-		//	for (; first != last; distance--, first--) ;
-		//return (distance);
 	}
 	
 	/*
@@ -384,11 +379,6 @@ namespace ft
 				iterator_type	temp = _iter;
 				return *(--temp - n);
 			}
-
-			//difference_type	operator-(const reverse_iterator& rhs)
-			//{
-			//	return (rhs.base() - this->base());
-			//}
 	};
 
 	/*
@@ -401,7 +391,8 @@ namespace ft
 	 * */
 
 	template <class Iter>
-	reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n,
+	reverse_iterator<Iter>
+		operator+(typename reverse_iterator<Iter>::difference_type n,
 			const reverse_iterator<Iter> &other)
 	{
 		return (other + n);
@@ -421,21 +412,6 @@ namespace ft
 		return (rhs.base() - lhs.base());
 	}
 
-	//template <class Iter>
-	//typename reverse_iterator<Iter>::difference_type
-	//	operator-(const reverse_iterator<Iter> &lhs,
-	//				const reverse_iterator<Iter> &rhs)
-	//{
-	//	return (rhs.base() - lhs.base());
-	//}
-
-	//template <class Iter1, class Iter2>
-	//bool	operator-(const reverse_iterator<Iter1> &lhs,
-	//					const reverse_iterator<Iter2> &rhs)
-	//{
-	//	return (lhs.base() - rhs.base());
-	//}
-	
 	template <class Iter1, class Iter2>
 	bool operator==(const reverse_iterator<Iter1> &lhs, const reverse_iterator<Iter2> &rhs)
 	{
@@ -592,6 +568,8 @@ namespace ft
 
 	/*
 	 * Pair
+	 * Pair is a class template that provides a way to 
+	 * store two objects as a single unit.
 	 * */
 
 	template <class T1, class T2>
@@ -639,13 +617,17 @@ namespace ft
 			return (*this);
 		}
 
-		/*
-		 * make_pair.
-		 * */
-
 		T1		first;
 		T2		second;
 	};
+
+	/*
+	 * make_pair.
+	 * Returs a pair with the two elements passed in.
+	 * 
+	 * @param 'x' : the first value of the pair.
+	 * @param 'y' : the second value of the pair.
+	 * */
 
 	template <class T1, class T2>
 	pair<T1,T2> make_pair(T1 x, T2 y)
